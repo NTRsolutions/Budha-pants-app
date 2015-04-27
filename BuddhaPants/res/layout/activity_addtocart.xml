@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relative_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#99000000" 
-    android:id="@+id/relative_parent">
+    android:background="#99000000" >
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"
@@ -40,8 +40,7 @@
                 android:paddingRight="10dp"
                 android:text="subtotal"
                 android:textColor="@android:color/black"
-                android:textSize="12sp"
-                android:visibility="visible" />
+                android:textSize="12sp" />
         </RelativeLayout>
 
         <ListView
@@ -49,8 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/btnCheckOut"
-            android:layout_below="@+id/relative_price"
-            android:visibility="visible" >
+            android:layout_below="@+id/relative_price" >
         </ListView>
 
         <TextView
@@ -71,12 +69,11 @@
             android:layout_alignParentBottom="true"
             android:layout_margin="10dp"
             android:background="@color/color_cyan"
+            android:clickable="true"
             android:text="CHECKOUT"
             android:textColor="@android:color/white"
             android:textSize="16sp"
-            android:clickable="true"
-            android:textStyle="bold"
-            android:visibility="visible" />
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <ImageView

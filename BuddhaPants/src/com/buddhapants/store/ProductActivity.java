@@ -282,11 +282,11 @@ public class ProductActivity extends Activity {
 				// TODO Auto-generated method stub
 				String selected = parent.getItemAtPosition(0).toString();
 				if (selected == null) {
-					Toast.makeText(getApplicationContext(), "NOT SELECTED", 0)
-							.show();
-				} else {
-					Toast.makeText(getApplicationContext(), "SELECTED", 0)
-							.show();
+//					Toast.makeText(getApplicationContext(), "NOT SELECTED", 0)
+//							.show();
+//				} else {
+//					Toast.makeText(getApplicationContext(), "SELECTED", 0)
+//							.show();
 				}
 			}
 
@@ -322,7 +322,7 @@ public class ProductActivity extends Activity {
 			_mViewPager.setAdapter(_adapter);
 
 		} else {
-
+			
 		}
 
 	}

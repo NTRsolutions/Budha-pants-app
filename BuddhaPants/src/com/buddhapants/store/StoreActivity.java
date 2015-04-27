@@ -69,39 +69,37 @@ public class StoreActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					final int position, long id) {
 				// TODO Auto-generated method stub
-				pDialog.setMessage("Loading...");
-				pDialog.show();
+				// pDialog.setMessage("Loading...");
+				// pDialog.show();
+				//
+				// new Handler().postDelayed(new Runnable() {
+				//
+				// /*
+				// * Showing splash screen with a timer. This will be useful
+				// * when you want to show case your app logo / company
+				// */
+				//
+				// @Override
+				// public void run() {
+				// // This method will be executed once the timer is over
+				// // Start your app main activity
+				// pDialog.dismiss();
+				final ImageModal storeModal = listStoreModal.get(position);
+				String Product_id = storeModal.getProduct_id();
+				String ID = storeModal.getID();
+				String CoverImage = storeModal.getImage();
+				Bundle b = new Bundle();
+				b.putString("Key", Product_id);
 
-				new Handler().postDelayed(new Runnable() {
-
-					/*
-					 * Showing splash screen with a timer. This will be useful
-					 * when you want to show case your app logo / company
-					 */
-
-					@Override
-					public void run() {
-						// This method will be executed once the timer is over
-						// Start your app main activity
-						pDialog.dismiss();
-						final ImageModal storeModal = listStoreModal
-								.get(position);
-						String Product_id = storeModal.getProduct_id();
-						String ID = storeModal.getID();
-						String CoverImage = storeModal.getImage();
-						Bundle b = new Bundle();
-						b.putString("Key", Product_id);
-
-						Intent i = new Intent(StoreActivity.this,
-								ProductActivity.class);
-						i.putExtras(b);
-						i.putExtra("JSON", stringJSon);
-						i.putExtra("ID", ID);
-						i.putExtra("IMAGE", CoverImage);
-						startActivity(i);
-					}
-				}, 1200);
-
+				Intent i = new Intent(StoreActivity.this, ProductActivity.class);
+				i.putExtras(b);
+				i.putExtra("JSON", stringJSon);
+				i.putExtra("ID", ID);
+				i.putExtra("IMAGE", CoverImage);
+				startActivity(i);
+				// }
+				// }, 1200);
+				//
 			}
 		});
 
@@ -154,8 +152,9 @@ public class StoreActivity extends Activity {
 			this.mContext = mContext;
 
 			this.listStoreModal = listStoreModal;
-//			Log.e("enter", "eneter");
-//			Log.e("listStoreModal.size()--------", "" + listStoreModal.size());
+			// Log.e("enter", "eneter");
+			// Log.e("listStoreModal.size()--------", "" +
+			// listStoreModal.size());
 
 		}
 
@@ -207,20 +206,15 @@ public class StoreActivity extends Activity {
 
 			holder.textView.setText(title);
 			String getImage = storeModal.getImage();
-			// String uri = "@drawable/ic_no_image.png";
-			// BitmapFactory.Options options = new BitmapFactory.Options();
-			//
-			// // downsizing image as it throws OutOfMemory Exception for
-			// // larger
-			// // images
-			// options.inSampleSize = 1;
-			//
-			// Bitmap bitmap = BitmapFactory.decodeFile(title, options);
-			// Bitmap mBitmap = Bitmap.createScaledBitmap(bitmap, 100, 100,
-			// false);
+			
+			if (getImage == null) {
+				Picasso.with(getApplicationContext()).load(R.drawable.ic_no_image)
+						.into(holder.imageView);
+			} else {
 
-			Picasso.with(getApplicationContext()).load("" + getImage)
-					.into(holder.imageView);
+				Picasso.with(getApplicationContext()).load("" + getImage)
+						.into(holder.imageView);
+			}
 
 			return convertView;
 
@@ -275,8 +269,8 @@ public class StoreActivity extends Activity {
 
 				JSONObject mJsonObject = new JSONObject(result);
 				mJsonArray = mJsonObject.getJSONArray("products");
-//				Log.e("mJsonArray", "" + mJsonArray);
-//				Log.e("mJsonArray", "" + mJsonArray.length());
+				// Log.e("mJsonArray", "" + mJsonArray);
+				// Log.e("mJsonArray", "" + mJsonArray.length());
 				for (int i = 0; i < mJsonArray.length(); i++) {
 					JSONObject jsonObject = mJsonArray.getJSONObject(i);
 
@@ -285,29 +279,15 @@ public class StoreActivity extends Activity {
 					String title = jsonObject.getString("title").replaceAll(
 							"[^\\x00-\\x7F]", "");
 					String id = jsonObject.getString("id");
-//					Log.e("id---------", "" + id.length());
+					// Log.e("id---------", "" + id.length());
 
-//					Log.e("id---", "" + id);
+					// Log.e("id---", "" + id);
 					if (jsonObject.has("image")) {
 						Image_scr = jsonObject.getJSONObject("image");
 						String src = Image_scr.getString("src");
-						
-							storeModal.setImage(src);
-						
-						
 
-					} else {
-//						 String url =
-//						 "https://cdn.shopify.com/s/files/1/0532/1481/products/plaid3.jpg?v=1424223031";
-//						 storeModal.setImage(url);
-						// String uri = "@drawable/ic_no_image.png";
-						//
-						// int imageResource = getResources().getIdentifier(uri,
-						// null, getPackageName());
-						//
-						// Drawable res = getResources()
-						// .getDrawable(imageResource);
-						// storeModal.setImage(uri);
+						storeModal.setImage(src);
+
 					}
 
 					p_id = Image_scr.getString("product_id");

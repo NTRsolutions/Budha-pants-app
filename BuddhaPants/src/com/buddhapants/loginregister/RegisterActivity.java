@@ -63,7 +63,7 @@ public class RegisterActivity extends Activity {
 				pwd = edtPassword.getText().toString().trim();
 				boolean receive = validatation_method();
 				if (receive) {
-					new ExecuteRegister().execute(AppConstant.CUSTOMERS);
+					new ExecuteRegister().execute(AppConstant.REGISTER);
 				}
 				// Intent iCreate = new Intent(RegisterActivity.this,
 				// HomepageActivity.class);

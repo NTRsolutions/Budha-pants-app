@@ -36,6 +36,7 @@ public class LoginActivity extends Activity {
 	TextView txtForgotpwd;
 	SharedPreferences sharedPreferences;
 	Editor editor;
+	boolean status = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -150,52 +151,64 @@ public class LoginActivity extends Activity {
 			super.onPostExecute(result);
 			pDialog.dismiss();
 
-			updateSession(result);
-
+			status = updateSession(result);
+			
 		}
 
 	}
 
-	public void updateSession(String result) {
+	public boolean updateSession(String result) {
 		// TODO Auto-generated method stub
+		status = false;
 		try {
 			JSONObject mJsonObject = new JSONObject(result);
-			jsonArray = mJsonObject.getJSONArray("customers");
-			if (jsonArray.length() == 0) {
-				LogMessage.showDialog(LoginActivity.this, null,
-						"Invalid login credentials.", "OK");
-			} else {
 
+			jsonArray = mJsonObject.getJSONArray("customers");
+			
+			Log.e("", "0");
+			if (jsonArray.length() == 0) {
+				Log.e("", "0");
+				LogMessage.showDialog(LoginActivity.this, null,
+						"Invalid credentials", "OK");
+				status = false;
+				//return status;
+			} else {
+				Log.e("", "1");
 				for (int i = 0; i < jsonArray.length(); i++) {
+
 					JSONObject jsonObject = jsonArray.getJSONObject(i);
+
 					_email = jsonObject.getString("email");
+
 					if (_email.matches(strEmail)) {
-						Toast.makeText(getApplicationContext(), "Logged in as"+_email, 0).show();
-						Intent iForm = new Intent(LoginActivity.this,
-								HomepageActivity.class);
-						startActivity(iForm);
-						finish();
-					}
-					else {
-						Toast.makeText(getApplicationContext(), "error"+_email, 0).show();
+
+						status = true;
+						Toast.makeText(getApplicationContext(),
+								"Logged in as:" + _email, 0).show();
 					}
 					id = jsonObject.getInt("id");
 					Log.e("id-----", "" + id);
 					Log.e("_email-----", "" + _email);
 				}
+
 				boolean receive = connection.insertDataID("" + id, _email);
 				Log.e("strEmail---", "" + strEmail);
+				Log.e("id-----", "" + id);
 				Log.e("receive-----", "" + receive);
-				if (receive) {
-					// Intent iForm = new Intent(LoginActivity.this,
-					// HomepageActivity.class);
-					// startActivity(iForm);
-					// finish();
+				
+				if (status = true) {
+					Log.e("Status", "Status true");
+					Intent iForm = new Intent(LoginActivity.this,
+							HomepageActivity.class);
+					startActivity(iForm);
+					finish();
 				}
 			}
+
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+		return status;
 	}
 
 	public void sharedPrefernces() {

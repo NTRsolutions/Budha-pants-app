@@ -13,7 +13,7 @@ public class AppConstant {
 	public static final String EVENTS = "https://buddhapants-2.myshopify.com/admin/pages/20270275.json";
 	public static final String RETAILERS = "https://buddhapants-2.myshopify.com/admin/pages/18131879.json";
 	public static final String CONTACT = "https://buddhapants-2.myshopify.com/admin/pages/18131831.json";
-	public static final String CUSTOMERS = "https://buddhapants-2.myshopify.com/admin/customers.json";
+	public static final String REGISTER = "https://buddhapants-2.myshopify.com/admin/customers.json";
 	public static final String LOGIN = "https://buddhapants-2.myshopify.com/admin/customers/search.json";
 
 }
