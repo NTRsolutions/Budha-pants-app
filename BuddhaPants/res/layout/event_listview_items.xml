@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/img_events"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="30dp"
+        android:padding="5dp"
+       android:layout_marginTop="20dp"
+        android:src="@drawable/img_brandambasdor" />
+
+    <View
+        android:id="@+id/viewSeperator"
+        android:layout_width="1dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/color_maroon" />
+
+    <TextView
+        android:id="@+id/txtAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/viewSeperator"
+        android:gravity="left"
+        android:paddingLeft="5dp"
+        android:textSize="16sp"
+        android:textColor="@color/color_maroon"
+        android:textStyle="italic" />
+
+</RelativeLayout>

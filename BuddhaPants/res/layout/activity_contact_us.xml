@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white" >
+
+    <RelativeLayout
+        android:id="@+id/relative_header"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/bg_header_" >
+
+        <ImageButton
+            android:id="@+id/btn_addTo_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_addcart" />
+
+        <ImageView
+            android:id="@+id/img_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="2dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/img_logo" />
+
+        <ImageButton
+            android:id="@+id/btn_back_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_back_arrow" />
+
+        <TextView
+            android:id="@+id/txt_notification"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignTop="@+id/btn_addTo_cart"
+            android:background="@drawable/circle_notification"
+            android:gravity="top|center"
+            android:text="1"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/relative_header" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/txt_contact_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="STAY CONNECTED!"
+                android:textColor="@color/color_login"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/txt_contact_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_contact_title"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/color_maroon"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:id="@+id/linear_images"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_contact_address"
+                android:orientation="horizontal"
+                android:padding="5dp" >
+
+                <ImageView
+                    android:id="@+id/img_instagram"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="50"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/img_instagram_contact" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/color_maroon" />
+
+                <ImageView
+                    android:id="@+id/img_pinterest"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="50"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/img_pinterest_contact" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/color_maroon" />
+
+                <ImageView
+                    android:id="@+id/img_facebook"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="50"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/img_facebook_contact" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_clickabletext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linear_images"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/txt_order_inquery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_clickabletext"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/color_maroon"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:id="@+id/linear_fields"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_order_inquery"
+                android:orientation="vertical"
+                android:padding="10dp" >
+
+                <TextView
+                    android:id="@+id/txt_Cname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Name*"
+                    android:textColor="@color/color_maroon"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/edt_Cname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/edittext_selector_maroon"
+                    android:gravity="left|center"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/color_maroon"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txt_Ccompany"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Company"
+                    android:textColor="@color/color_maroon"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/edt_Ccompany"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/edittext_selector_maroon"
+                    android:gravity="left|center"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/color_maroon"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txt_Cmailingaddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Mailing Address"
+                    android:textColor="@color/color_maroon"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/edt_Cmailingaddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/edittext_selector_maroon"
+                    android:gravity="left|center"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/color_maroon"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txt_Cemail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Email*"
+                    android:textColor="@color/color_maroon"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/edt_Cemail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/edittext_selector_maroon"
+                    android:gravity="left|center"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/color_maroon"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txt_Cinstagram"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Instagram Account"
+                    android:textColor="@color/color_maroon"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/edt_Cinstargram"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/edittext_selector_maroon"
+                    android:gravity="left|center"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/color_maroon"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txt_Cmessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Message"
+                    android:textColor="@color/color_maroon"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/edt_Cmessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/edittext_selector_maroon"
+                    android:gravity="left|top|center_horizontal"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/color_maroon"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/btn_Csend"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/color_login"
+                    android:text="SEND"
+                    android:textColor="@color/color_maroon"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

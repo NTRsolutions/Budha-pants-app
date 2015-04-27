@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">BuddhaPants</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Login screen -->
+    <string name="login_username">email</string>
+    <string name="login_password">password</string>
+    <string name="button_login">Log In</string>
+    <string name="login_forgot_pwd">FORGOT PASSWORD</string>
+    <string name="button_register">Register</string>
+
+    <!-- Forgot password -->
+    <string name="txt_forgot_pwd">We will send you an email to reset your\npassword.</string>
+    <string name="txt_cancel"><u>Cancel</u></string>
+
+    <!-- Register Screen -->
+    <string name="register_firstname">first name</string>
+    <string name="register_lastname">last name</string>
+    <string name="register_email">email address</string>
+    <string name="register_pwd">password</string>
+    <string name="button_create">Create</string>
+
+    <!-- Home screen -->
+    <string name="text_header">Pants that make you dance!</string>
+    <string name="text_about">&#160;&#160;&#160;Buddha Pants is a clothing company dedicated to creating multifunctional travel ready apparel,focusing on comfort &amp; encouraging an active lifestyle. We make the only yoga pant that packs into its pocket! The yoga harem pant that packs into it pocket was inspired by the Eno Hammock, designed and manufactured by Buddha Pants.</string>
+    <string name="text_quote">\"I wanted to create a harem pant with pockets! Harem pants with pockets are not common, yet so functional, when I had the idea to combine the two it made so much sense. Something practical and comfy. Go figure. I hope you enjoy the pants just as much as I do.\"
+        \n &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;- Rachel Raab (Founder + Creative Director) </string>
+
+    <!-- About Screen -->
+    <string name="text_about_title">Our mission is to create organic, fun, comfy,\n multi-functional \n garments just for you!</string>
+    <string name="text_about_desc">Buddha Pants is a clothing company dedicated to creating multifunctional travel ready apparel, focusing on comfort &amp; encouraging an active lifestyle. The harem pant that packs into it pocket was inspired by the Eno Hammock \nand designed and manufactured by Rachel Raab. "I wanted to create a harem pant with pockets! Harem pants with pockets are not common, yet so functional, when I had the idea to combine the two it made so much sense. Something practical and comfy. Go figure. I hope you enjoy the pants just as much as I do." - Raab\n\nBuddha Pants was founded in December 2012 by Rachel Raab, Similar styles of Buddha Pants are called shalwar pants, harem pants, Gypsy pants. Buddha pants are all of the above and they fold themselves into their own pocket, making them a perfect travel-ready addition to any wardrobe! They give the illusion of a large triangular skirt but have flexible ankles that can be pulled up on the calf to create different looks.</string>
+    <string name="text_rachel_raab">Raab, an artist and jack of all trades, holds a A.S. degree in Photographic Technology and a B.F.A in Photography with a minor in Graphic Arts. She has been a full time Graphic Designer and part time Printer and Photographer for over a decade now, having opened The Soda Shop, a one stop print and design firm in Savannah, Georgia. With a recent move to Miami, Raab was looking to get away from the industry. Her found passion for yoga and her love of Harem Pants presented a superb mix for a new business venture and beginning. Raab is now studying part time at FIU for Fashion and dedicating the rest of her days to designing and operating Buddha Pants.</string>
+    <string name="text_caroline_mae">Designer Caroline Mae Heidenreich graduated from Savannah College of Art and Design (SCAD) with a BFA in Fashion Design in 2009. She received the Jeffrey Fashion Cares New Talent Award after graduation and started creating custom couture looks for the elite in Atlanta, Los Angeles, Santa Barbara, Tallahassee, Havana, Miami, and NYC.\n\nCaroline Mae Heidenreich, friend and mentor of founder Rachel Raab, is a fashion Designer extraordinaire based out of New York City. Heidenreich and Raab graduated from SCAD together in 2009. Raab, always wearing a baggy pant, fell in love with a harem pant Caroline brought back from Paris in 2008. Raab commissioned her to make several pairs during her fashion studies at SCAD. Somewhere along the line they were nicknamed Buddha Pants. Raab has found many pairs over the last 5 years, scavenging everywhere from markets in Mexico to hippy stores in Charleston, SC. Never finding the perfect comfy pair. Raab and Heidenrich reunited in December 2012 after a few sips of bourbon the drawing pad came out and BuddhaPants.com was bought. Mae now resides in NYC and is busy with her brand and other endeavors. </string>
+    <string name="text_claudio_milano">Based in Miami, Claudio Milano is high end fashion brand and boutique, dedicated to elegance and class.\n\nOnce Raab and Frost had the prototype their plan was ready to be executed. Raab, studying fashion at FIU, started reaching out to international companies to begin production, a stressful and discouraging process. At a breaking point Raab sat down and decided to try to reach out to someone locally. After a chance phone call we were connected with a local fashion designer, Claudio Cohen of Claudio Milano. He welcomed us into is office and business with no hesitation, and the process of refining the original prototypes was undertaken. He is our mentor and inspiration. Claudio has helped us perfect all the little things that matter and manufactured the pants in his personal factory in Vietnam.</string>
+    <string name="txt_visit_rachel"><u><a href="http://www.raabstract.com/">Visit her website…</a></u></string>
+    <string name="txt_visit_caroline"><u><a href="http://www.maecouture.com/">Visit her website…</a></u></string>
+    <string name="txt_visit_his"><u><a href="http://www.claudiomilano.com/">Visit his website…</a></u></string>
+
+    <!-- Wholesale screen -->
+    <string name="text_wholesale">Interested in wholesale?\nPlease email\nWholesale@BuddhaPants.com or fill the \nform out below.\n\n &#160;Please tell us where your studio is located and include studio website address.</string>
+
+    <!-- Get Involved -->
+    <string name="text_involved_title">Become a Buddha \nAmbassador!</string>
+    <string name="text_involved_desc">Interested in becoming a brand Ambassador?\n&#160;&#160;Email Ambassadors@BuddhaPants.com Or&#160;fill out the form below. </string>
+
+    <!-- Product Screen -->
+    <string name="text_heading">SHIPPING NOW!!! 100% ORGANIC &amp; DYED WITH PLANT BASED MATERIALS!</string>
+    <string name="text_description_product"><i>PLEASE NOTE </i>*Savannah Winter runs a tad shorter than the Savannah Flairs.\n\nThe Savannah Winter pant is now available! Shaped like the original Savannah pant but using the original Buddha material. Remember that thick snugly organic cotton? The winter Savannah is available in seven earth tone colors + five sizes.\n\nHow or where to use them?\n\n&#8226;Take them camping and just tie them to your backpack! They take up no space!\n\n&#8226;Take them to the beach and tie them to your beach bag, wear them after you swim or use them as a beach blanket or even a pillow\n\n&#8226;Throw them in your car or hang them from your bike and always have a pair or comfy pants near by.\n\n&#8226;Swing them over your shoulder and take them as a cushion to your yoga class!\n Have you used them in a different way? We are excited to hear! Hello@buddhapants.com\nSIZES\n\nXXS Waist 27”-28” Women 0-1\nXS Waist 28”-30" Women 2-4\nS Waist 30”-32” Women 4-6\nM Waist 32”-35” Women 6-9\nL Waist 35”-38” Women 8-12\n \nPLEASE NOTE  *Savannah Winter runs a tad shorter than the Savannah Flairs. </string>
+
+</resources>

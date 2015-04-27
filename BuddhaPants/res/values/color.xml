@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Login Screen -->
+    <color name="color_login">#64DDCE</color>
+    <!-- Navigation screen -->
+    <color name="color_listitem">#147C95</color>
+    <!-- Store Screen -->
+    <color name="color_grey">#ABABAB</color>
+    <color name="color_cyan">#60CCBF</color>
+    <!-- Retailer screen -->
+    <color name="color_maroon">#8D081B</color>
+    
+
+</resources>

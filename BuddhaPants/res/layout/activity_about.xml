@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white" >
+
+    <RelativeLayout
+        android:id="@+id/relative_header"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/bg_header_" >
+
+        <ImageButton
+            android:id="@+id/btn_addTo_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_addcart" />
+
+        <ImageView
+            android:id="@+id/img_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="2dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/img_logo" />
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_back_arrow" />
+
+        <ImageView
+            android:id="@+id/img_arrow"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignRight="@+id/btn_addTo_cart"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/ic_arrow_up"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/relative_header" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/txt_about_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/text_about_title"
+                android:textColor="@color/color_login"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_about_quote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_about_title"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="@string/text_about_desc"
+                android:textColor="@color/color_maroon"
+                android:textSize="18sp" />
+
+            <RelativeLayout
+                android:id="@+id/relative_rachel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_about_quote"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp" >
+
+                <ImageView
+                    android:id="@+id/img_Rachel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/img_compact" />
+
+                <TextView
+                    android:id="@+id/txt_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/img_Rachel"
+                    android:gravity="left"
+                    android:paddingLeft="20dp"
+                    android:text="Rachel Raab"
+                    android:textColor="@color/color_cyan"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_designation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_name"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/img_Rachel"
+                    android:gravity="left"
+                    android:paddingLeft="20dp"
+                    android:text="Founder + Principal"
+                    android:textColor="@color/color_maroon"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/txt_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/img_Rachel"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/text_rachel_raab"
+                    android:textColor="@color/color_maroon"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/txt_visit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_desc"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/txt_visit_rachel"
+                    android:textColor="@color/color_maroon"
+                    android:textColorLink="@color/color_maroon"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_caroline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relative_rachel"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp" >
+
+                <ImageView
+                    android:id="@+id/img_caroline"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/img_caroline_small" />
+
+                <TextView
+                    android:id="@+id/txt_name_caroline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/img_caroline"
+                    android:gravity="left"
+                    android:paddingLeft="20dp"
+                    android:text="CAROLINE MAE"
+                    android:textColor="@color/color_cyan"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_designation_caroline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_name_caroline"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/img_caroline"
+                    android:gravity="left"
+                    android:paddingLeft="20dp"
+                    android:text="Inspirer"
+                    android:textColor="@color/color_maroon"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/txt_desc_caroline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/img_caroline"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/text_caroline_mae"
+                    android:textColor="@color/color_maroon"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/txt_visit_caroline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_desc_caroline"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/txt_visit_caroline"
+                    android:textColor="@color/color_maroon"
+                    android:textColorLink="@color/color_maroon"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_claudio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relative_caroline"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:paddingBottom="10dp" >
+
+                <ImageView
+                    android:id="@+id/img_claudio"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/img_claudio_and_avi_2_compact" />
+
+                <TextView
+                    android:id="@+id/txt_name_claudio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/img_claudio"
+                    android:gravity="left"
+                    android:paddingLeft="20dp"
+                    android:text="CLAUDIO MILANO"
+                    android:textColor="@color/color_cyan"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_designation_claudio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_name_claudio"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@+id/img_claudio"
+                    android:gravity="left"
+                    android:paddingLeft="20dp"
+                    android:text="Manufacturer"
+                    android:textColor="@color/color_maroon"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/txt_desc_claudio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/img_claudio"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_claudio_milano"
+                    android:textColor="@color/color_maroon"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/txt_visit_claudio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_desc_claudio"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/txt_visit_his"
+                    android:textColor="@color/color_maroon"
+                    android:textColorLink="@color/color_maroon"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

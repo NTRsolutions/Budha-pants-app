@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#62D0C5" >
+
+    <RelativeLayout
+        android:id="@+id/id_relHeader"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" >
+
+<!--         <TextView -->
+<!--             android:id="@+id/txt_Logout" -->
+<!--             android:layout_width="wrap_content" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:layout_marginLeft="20dp" -->
+<!--             android:layout_marginRight="20dp" -->
+<!--             android:layout_marginTop="10dp" -->
+<!--             android:background="@android:color/transparent" -->
+<!--             android:text="LOG OUT" -->
+<!--             android:textColor="@android:color/white" -->
+<!--             android:textSize="18sp" /> -->
+
+<!--         <EditText -->
+<!--             android:id="@+id/edt_search" -->
+<!--             android:layout_width="match_parent" -->
+<!--             android:layout_height="30dp" -->
+<!--             android:layout_alignParentRight="true" -->
+<!--             android:layout_marginLeft="20dp" -->
+<!--             android:layout_marginRight="10dp" -->
+<!--             android:layout_marginTop="5dp" -->
+<!--             android:layout_toRightOf="@+id/txt_Logout" -->
+<!--             android:background="@drawable/edittext_selector" -->
+<!--             android:drawablePadding="3dp" -->
+<!--             android:drawableRight="@drawable/ic_search" -->
+<!--             android:paddingLeft="5dp" -->
+<!--             android:textColor="@android:color/white" -->
+<!--             android:textSize="14sp" /> -->
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/viewSeperator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/id_relHeader"
+        android:background="@android:color/white" />
+
+    <ListView
+        android:id="@+id/listview_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/viewSeperator"
+        android:descendantFocusability="beforeDescendants"
+        android:divider="@android:color/white"
+        android:dividerHeight="1dp" >
+    </ListView>
+
+    <View
+        android:id="@+id/view_Seperator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/listview_navigation"
+        android:background="@android:color/white" />
+
+    <LinearLayout
+        android:id="@+id/rel_social_sharing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/view_Seperator"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/img_twitter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_twitter" />
+
+        <ImageButton
+            android:id="@+id/img_facebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_facebook" />
+
+        <ImageButton
+            android:id="@+id/img_tumblr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_tumblr" />
+
+        <ImageButton
+            android:id="@+id/img_instagram"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_instagram" />
+
+        <ImageButton
+            android:id="@+id/img_pinterest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_pinterest" />
+    </LinearLayout>
+
+</RelativeLayout>

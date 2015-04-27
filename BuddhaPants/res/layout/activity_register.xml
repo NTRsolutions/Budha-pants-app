@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_login" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="5dp"
+        android:background="@android:color/transparent" >
+
+        <EditText
+            android:id="@+id/edt_lastname"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignLeft="@+id/edt_firstname"
+            android:layout_alignRight="@+id/edt_firstname"
+            android:layout_below="@+id/edt_firstname"
+            android:layout_marginTop="10dp"
+            android:alpha="0.8"
+            android:background="@android:color/white"
+            android:hint="@string/register_lastname"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:textColor="@color/color_cyan"
+            android:textColorHint="@color/color_cyan"
+            android:textSize="22sp" />
+
+        <EditText
+            android:id="@+id/edt_email"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignLeft="@+id/edt_lastname"
+            android:layout_alignRight="@+id/edt_lastname"
+            android:layout_below="@+id/edt_lastname"
+            android:layout_marginTop="10dp"
+            android:alpha="0.8"
+            android:background="@android:color/white"
+            android:hint="@string/register_email"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:textColor="@color/color_cyan"
+            android:textColorHint="@color/color_cyan"
+            android:textSize="22sp" />
+
+        <EditText
+            android:id="@+id/edt_pwd_register"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignLeft="@+id/edt_email"
+            android:layout_alignRight="@+id/edt_email"
+            android:layout_below="@+id/edt_email"
+            android:layout_marginTop="10dp"
+            android:alpha="0.8"
+            android:background="@android:color/white"
+            android:hint="@string/register_pwd"
+            android:inputType="textPassword"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:textColor="@color/color_cyan"
+            android:textColorHint="@color/color_cyan"
+            android:textSize="22sp" />
+
+        <Button
+            android:id="@+id/btn_Create"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignLeft="@+id/edt_pwd_register"
+            android:layout_alignRight="@+id/edt_pwd_register"
+            android:layout_below="@+id/edt_pwd_register"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/color_cyan"
+            android:text="@string/button_create"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="22sp" />
+
+        <EditText
+            android:id="@+id/edt_firstname"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:alpha="0.8"
+            android:background="@android:color/white"
+            android:ems="10"
+            android:hint="@string/register_firstname"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:textColor="@color/color_cyan"
+            android:textColorHint="@color/color_cyan"
+            android:textSize="22sp" >
+
+            <requestFocus />
+        </EditText>
+    </RelativeLayout>
+
+</RelativeLayout>
