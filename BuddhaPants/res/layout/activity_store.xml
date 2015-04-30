@@ -25,7 +25,6 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginBottom="2dp"
-          
             android:background="@android:color/transparent"
             android:src="@drawable/img_logo" />
 
@@ -50,5 +49,15 @@
         android:numColumns="2"
         android:stretchMode="columnWidth" >
     </GridView>
+
+    <TextView
+        android:id="@+id/no_product"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="No product available"
+        android:visibility="gone" >
+    </TextView>
 
 </RelativeLayout>

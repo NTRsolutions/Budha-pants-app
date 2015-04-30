@@ -12,8 +12,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,12 +27,13 @@ import com.buddhapants.AppConstant;
 import com.buddhapants.R;
 import com.buddhapants.modal.ImageModal;
 import com.buddhapants.ui.AddToCartActivity;
-import com.buddhapants.util.ConnectionDetector;
-import com.buddhapants.util.LogMessage;
+import com.buddhapants.util.JsonParser;
 import com.buddhapants.webservices.WSAdapter;
-import com.squareup.picasso.Picasso;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
-public class StoreActivity extends Activity {
+public class StoreActivity2 extends Activity {
 	GridView gridView;
 	GridViewAdapter gridadapter;
 
@@ -47,8 +46,8 @@ public class StoreActivity extends Activity {
 	JSONArray mJsonArray;
 	JSONObject Image_scr;
 	String stringJSon;
-	ConnectionDetector cd;
 	Boolean isInternetPresent = false;
+	private TextView noProductText;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +55,22 @@ public class StoreActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_store);
 		pDialog = new ProgressDialog(this);
-		cd = new ConnectionDetector(getApplicationContext());
 		listStoreModal = new ArrayList<ImageModal>();
 		gridView = (GridView) findViewById(R.id.gridviewlist_store);
+		noProductText = (TextView) findViewById(R.id.no_product);
 		backButton = (ImageButton) findViewById(R.id.btn_back);
 		addtoCart = (ImageButton) findViewById(R.id.btn_addTo_cart);
-		checkInternet();
+
+		setupButtonListener();
+
+		setupImageLoader();
+
+		new ExecuteStore().execute();
+
+	}
+
+	private void setupButtonListener() {
+		// TODO Auto-generated method stub
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -69,17 +78,13 @@ public class StoreActivity extends Activity {
 					final int position, long id) {
 
 				final ImageModal storeModal = listStoreModal.get(position);
-				String Product_id = storeModal.getProduct_id();
-				String ID = storeModal.getID();
-				String CoverImage = storeModal.getImage();
-				Bundle b = new Bundle();
-				b.putString("Key", Product_id);
+				String producId = storeModal.getProduct_id();
+				String image = storeModal.getImage();
 
-				Intent i = new Intent(StoreActivity.this, ProductActivity.class);
-				i.putExtras(b);
-				i.putExtra("JSON", stringJSon);
-				i.putExtra("ID", ID);
-				i.putExtra("IMAGE", CoverImage);
+				Intent i = new Intent(StoreActivity2.this,
+						ProductActivity2.class);
+				i.putExtra("product_id", producId);
+				i.putExtra("product_image", image);
 				startActivity(i);
 			}
 		});
@@ -97,32 +102,12 @@ public class StoreActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent iAddToCart = new Intent(StoreActivity.this,
+				Intent iAddToCart = new Intent(StoreActivity2.this,
 						AddToCartActivity.class);
 				startActivity(iAddToCart);
 			}
 		});
 
-		new ExecuteStore().execute();
-
-	}
-
-	public void checkInternet() {
-		// TODO Auto-generated method stub
-		isInternetPresent = cd.isConnectingToInternet();
-
-		// check for Internet status
-		if (isInternetPresent) {
-			// Internet Connection is Present
-			// make HTTP requests
-			// showAlertDialog(HomepageActivity.this, "Internet Connection",
-			// "You have internet connection", true);
-		} else {
-			// Internet connection is not present
-			// Ask user to connect to Internet
-			LogMessage.showDialog(StoreActivity.this, "No Internet Connection",
-					"You don't have internet connection.", "OK");
-		}
 	}
 
 	class GridViewAdapter extends BaseAdapter {
@@ -130,15 +115,13 @@ public class StoreActivity extends Activity {
 		private Context mContext;
 		private LayoutInflater inflater;
 		List<ImageModal> listStoreModal;
+		DisplayImageOptions options;
 
 		public GridViewAdapter(Context mContext, List<ImageModal> listStoreModal) {
 
 			this.mContext = mContext;
 			this.listStoreModal = listStoreModal;
-			// Log.e("enter", "eneter");
-			// Log.e("listStoreModal.size()--------", "" +
-			// listStoreModal.size());
-
+			options = setupImageLoader();
 		}
 
 		@Override
@@ -190,14 +173,17 @@ public class StoreActivity extends Activity {
 			holder.textView.setText(title);
 			String getImage = storeModal.getImage();
 
-			if (getImage != null && !getImage.equals("")) {
-				Picasso.with(StoreActivity.this).load(String.valueOf(getImage))
-						.error(R.drawable.ic_no_image).into(holder.imageView);
-			} else {
-				Picasso.with(StoreActivity.this).load(R.drawable.ic_no_image)
-						.into(holder.imageView);
-
-			}
+			// if (getImage != null && !getImage.equals("")) {
+			// Picasso.with(StoreActivity2.this)
+			// .load(String.valueOf(getImage))
+			// .error(R.drawable.ic_no_image).into(holder.imageView);
+			// } else {
+			// Picasso.with(StoreActivity2.this).load(R.drawable.ic_no_image)
+			// .into(holder.imageView);
+			//
+			// }
+			ImageLoader.getInstance().displayImage(getImage, holder.imageView,
+					options);
 
 			return convertView;
 
@@ -209,6 +195,16 @@ public class StoreActivity extends Activity {
 		ImageView imageView;
 	}
 
+	private DisplayImageOptions setupImageLoader() {
+		return new DisplayImageOptions.Builder().cacheInMemory(true)
+				.showImageOnLoading(R.drawable.ic_launcher)
+				.showImageForEmptyUri(R.drawable.no_image_icon)
+				.showImageOnFail(R.drawable.no_image_icon).cacheOnDisk(true)
+				.considerExifParams(true)
+				.displayer(new RoundedBitmapDisplayer(1)).build();
+
+	}
+
 	class ExecuteStore extends AsyncTask<String, Integer, String> {
 
 		@Override
@@ -216,7 +212,6 @@ public class StoreActivity extends Activity {
 			// TODO Auto-generated method stub
 			String response = WSAdapter.getJSONObject(AppConstant.STORE);
 			return response;
-
 		}
 
 		@Override
@@ -231,59 +226,19 @@ public class StoreActivity extends Activity {
 		protected void onPostExecute(String result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-
-			stringJSon = result;
-			listStoreModal = updateUI(result);
-
-			gridadapter = new GridViewAdapter(StoreActivity.this,
-					listStoreModal);
-			gridView.setAdapter(gridadapter);
 			pDialog.dismiss();
-		}
 
-		public List<ImageModal> updateUI(String result) {
-			// TODO Auto-generated method stub
-			List<ImageModal> listStoreModal = new ArrayList<ImageModal>();
+			listStoreModal = JsonParser.getProductList(result);
 
-			try {
-
-				JSONObject mJsonObject = new JSONObject(result);
-				mJsonArray = mJsonObject.getJSONArray("products");
-				// Log.e("mJsonArray", "" + mJsonArray);
-				// Log.e("mJsonArray", "" + mJsonArray.length());
-				for (int i = 0; i < mJsonArray.length(); i++) {
-					JSONObject jsonObject = mJsonArray.getJSONObject(i);
-
-					storeModal = new ImageModal();
-
-					String title = jsonObject.getString("title").replaceAll(
-							"[^\\x00-\\x7F]", "");
-					String id = jsonObject.getString("id");
-					// Log.e("id---------", "" + id.length());
-
-					// Log.e("id---", "" + id);
-					if (jsonObject.has("image")) {
-						Image_scr = jsonObject.getJSONObject("image");
-						String src = Image_scr.getString("src");
-
-						storeModal.setImage(src);
-
-					}
-
-					p_id = Image_scr.getString("product_id");
-
-					storeModal.setTitle(title);
-					storeModal.setProduct_id(p_id);
-					storeModal.setID(id);
-
-					listStoreModal.add(storeModal);
-
-				}
-			} catch (Exception e) {
-				// TODO: handle exception
+			if (listStoreModal != null && listStoreModal.size() != 0) {
+				gridadapter = new GridViewAdapter(StoreActivity2.this,
+						listStoreModal);
+				gridView.setAdapter(gridadapter);
+				noProductText.setVisibility(View.GONE);
+			} else {
+				gridView.setVisibility(View.GONE);
 			}
-
-			return listStoreModal;
 		}
+
 	}
 }

@@ -15,5 +15,13 @@ public class AppConstant {
 	public static final String CONTACT = "https://buddhapants-2.myshopify.com/admin/pages/18131831.json";
 	public static final String REGISTER = "https://buddhapants-2.myshopify.com/admin/customers.json";
 	public static final String LOGIN = "https://buddhapants-2.myshopify.com/admin/customers/search.json";
+	public static String USERID = "ID";
+
+	public static final String PRODUCT_DETAIL = "https://buddhapants-2.myshopify.com/admin/products/";
+
+	public static class Config {
+		public static final boolean DEVELOPER_MODE = false;
+
+	}
 
 }

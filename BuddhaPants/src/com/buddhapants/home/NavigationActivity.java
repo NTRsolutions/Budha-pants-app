@@ -26,7 +26,7 @@ import com.buddhapants.contactus.ContactActivity;
 import com.buddhapants.events.EventsActivity;
 import com.buddhapants.getinvolved.GetInvolvedActivity;
 import com.buddhapants.retailers.RetailersActivity;
-import com.buddhapants.store.StoreActivity;
+import com.buddhapants.store.StoreActivity2;
 import com.buddhapants.wholesale.WholesaleActivity;
 
 public class NavigationActivity extends Activity implements OnClickListener {
@@ -89,7 +89,7 @@ public class NavigationActivity extends Activity implements OnClickListener {
 					startActivity(iInvolved);
 				} else if (string.matches("STORE")) {
 					Intent iStore = new Intent(NavigationActivity.this,
-							StoreActivity.class);
+							StoreActivity2.class);
 					startActivity(iStore);
 				} else if (string.matches("EVENTS")) {
 					Intent iEVENT = new Intent(NavigationActivity.this,

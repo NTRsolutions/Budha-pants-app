@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:name="com.buddhapants.app.AppController"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -29,10 +30,10 @@
                 </category>
             </intent-filter>
         </activity>
-<!--         <activity -->
-<!--             android:name="com.buddhapants.loginregister.LoginActivity" -->
-<!--             android:screenOrientation="portrait" > -->
-<!--         </activity> -->
+        <!-- <activity -->
+        <!-- android:name="com.buddhapants.loginregister.LoginActivity" -->
+        <!-- android:screenOrientation="portrait" > -->
+        <!-- </activity> -->
         <activity
             android:name="com.buddhapants.home.HomepageActivity"
             android:screenOrientation="portrait" >
@@ -42,8 +43,12 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
+        <!-- <activity -->
+        <!-- android:name="com.buddhapants.store.StoreActivity" -->
+        <!-- android:screenOrientation="portrait" > -->
+        <!-- </activity> -->
         <activity
-            android:name="com.buddhapants.store.StoreActivity"
+            android:name="com.buddhapants.store.StoreActivity2"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -75,7 +80,7 @@
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
-            android:name="com.buddhapants.store.ProductActivity"
+            android:name="com.buddhapants.store.ProductActivity2"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
@@ -100,6 +105,23 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
+
+        <!-- Paypal Recommended class -->
+        <service
+            android:name="com.paypal.android.sdk.payments.PayPalService"
+            android:exported="false" />
+
+        <activity android:name="com.paypal.android.sdk.payments.PaymentActivity" />
+        <activity android:name="com.paypal.android.sdk.payments.LoginActivity" />
+        <activity android:name="com.paypal.android.sdk.payments.PaymentMethodActivity" />
+        <activity android:name="com.paypal.android.sdk.payments.PaymentConfirmActivity" />
+        <activity android:name="com.paypal.android.sdk.payments.PayPalFuturePaymentActivity" />
+        <activity android:name="com.paypal.android.sdk.payments.FuturePaymentConsentActivity" />
+        <activity android:name="com.paypal.android.sdk.payments.FuturePaymentInfoActivity" />
+        <activity
+            android:name="io.card.payment.CardIOActivity"
+            android:configChanges="keyboardHidden|orientation" />
+        <activity android:name="io.card.payment.DataEntryActivity" />
     </application>
 
 </manifest>

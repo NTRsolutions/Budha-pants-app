@@ -73,7 +73,6 @@ public class LoginActivity extends Activity {
 				strPwd = edtPwd.getText().toString();
 				boolean receive = validation(strEmail, strPwd);
 				if (receive) {
-					sharedPrefernces();
 					new ExecuteLogin().execute(strEmail, strPwd);
 				}
 			}
@@ -90,6 +89,20 @@ public class LoginActivity extends Activity {
 			}
 		});
 
+		checkFromLogin();
+
+	}
+	
+	private void checkFromLogin() {
+
+		String email = sharedPreferences.getString(AppConstant.EMAIL, "");
+		String password = sharedPreferences.getString(AppConstant.PASSWORD, "");
+		if (!email.equals("") && !password.equals("")) {
+			strEmail = email;
+			strPwd = password;
+			new ExecuteLogin().execute(email, password);
+		}
+
 	}
 
 	private boolean validation(String username, String password) {
@@ -101,14 +114,9 @@ public class LoginActivity extends Activity {
 					"Please enter your email address", "OK");
 			return false;
 		}
-		if (!username.matches(emailPattern)) {
-			LogMessage.showDialog(LoginActivity.this, null,
-					"Please enter valid email address.", "OK");
-			return false;
-		}
 		if (password.matches("")) {
 			LogMessage.showDialog(LoginActivity.this, null,
-					"Password should be atleast 5 characters", "OK");
+					"Please enter your password", "OK");
 			return false;
 		}
 
@@ -118,7 +126,6 @@ public class LoginActivity extends Activity {
 	public static String postSession(String email, String pwd) {
 		String url = AppConstant.LOGIN + "?query=" + email;
 		String result_session = WSAdapter.getJSONObject(url);
-		Log.e("result_session--", "" + result_session);
 		return result_session;
 
 	}
@@ -129,7 +136,6 @@ public class LoginActivity extends Activity {
 		protected String doInBackground(String... params) {
 			// TODO Auto-generated method stub
 			String URL = postSession(params[0], params[1]);
-			Log.e("URL--", "" + URL);
 			return URL;
 		}
 
@@ -150,9 +156,8 @@ public class LoginActivity extends Activity {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			pDialog.dismiss();
-
 			status = updateSession(result);
-			
+
 		}
 
 	}
@@ -164,16 +169,13 @@ public class LoginActivity extends Activity {
 			JSONObject mJsonObject = new JSONObject(result);
 
 			jsonArray = mJsonObject.getJSONArray("customers");
-			
-			Log.e("", "0");
+
 			if (jsonArray.length() == 0) {
-				Log.e("", "0");
 				LogMessage.showDialog(LoginActivity.this, null,
 						"Invalid credentials", "OK");
 				status = false;
-				//return status;
+				// return status;
 			} else {
-				Log.e("", "1");
 				for (int i = 0; i < jsonArray.length(); i++) {
 
 					JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -183,21 +185,15 @@ public class LoginActivity extends Activity {
 					if (_email.matches(strEmail)) {
 
 						status = true;
-						Toast.makeText(getApplicationContext(),
-								"Logged in as:" + _email, 0).show();
+						id = jsonObject.getInt("id");
+						break;
 					}
-					id = jsonObject.getInt("id");
-					Log.e("id-----", "" + id);
-					Log.e("_email-----", "" + _email);
 				}
 
 				boolean receive = connection.insertDataID("" + id, _email);
-				Log.e("strEmail---", "" + strEmail);
-				Log.e("id-----", "" + id);
-				Log.e("receive-----", "" + receive);
-				
+
 				if (status = true) {
-					Log.e("Status", "Status true");
+					sharedPrefernces();
 					Intent iForm = new Intent(LoginActivity.this,
 							HomepageActivity.class);
 					startActivity(iForm);
@@ -213,7 +209,9 @@ public class LoginActivity extends Activity {
 
 	public void sharedPrefernces() {
 		editor = sharedPreferences.edit();
+		editor.putString(AppConstant.USERID, String.valueOf(id));
 		editor.putString(AppConstant.EMAIL, strEmail);
+		editor.putString(AppConstant.PASSWORD, strPwd);
 		editor.commit();
 
 	}

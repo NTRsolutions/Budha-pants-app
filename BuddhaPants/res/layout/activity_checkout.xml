@@ -58,11 +58,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/relative_header"
         android:layout_marginTop="10dp"
+        android:gravity="center"
         android:paddingLeft="10dp"
         android:text="SHIPPING ADDRESS"
         android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="20sp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -94,8 +94,7 @@
                     android:layout_weight="10"
                     android:text="First name"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp" />
 
                 <EditText
                     android:layout_width="0dp"
@@ -131,8 +130,7 @@
                     android:layout_weight="10"
                     android:text="Last name"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp" />
 
                 <EditText
                     android:layout_width="0dp"
@@ -168,8 +166,7 @@
                     android:layout_weight="10"
                     android:text="Company"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp" />
 
                 <EditText
                     android:layout_width="0dp"
@@ -205,8 +202,7 @@
                     android:layout_weight="10"
                     android:text="Address"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp" />
 
                 <EditText
                     android:layout_width="0dp"
@@ -242,8 +238,7 @@
                     android:layout_weight="10"
                     android:text="Apt, suite, etc"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp" />
 
                 <EditText
                     android:layout_width="0dp"
@@ -279,8 +274,7 @@
                     android:layout_weight="10"
                     android:text="City"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp" />
 
                 <EditText
                     android:layout_width="0dp"
@@ -316,8 +310,7 @@
                     android:layout_weight="10"
                     android:text="Country"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp" />
 
                 <EditText
                     android:layout_width="0dp"
@@ -353,8 +346,7 @@
                     android:layout_weight="10"
                     android:text="State"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp" />
 
                 <EditText
                     android:layout_width="0dp"
@@ -390,8 +382,7 @@
                     android:layout_weight="10"
                     android:text="Postal code"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp" />
 
                 <EditText
                     android:layout_width="0dp"
@@ -427,8 +418,7 @@
                     android:layout_weight="10"
                     android:text="Phone"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp" />
 
                 <EditText
                     android:layout_width="0dp"

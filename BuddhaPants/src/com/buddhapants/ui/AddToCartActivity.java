@@ -42,6 +42,8 @@ public class AddToCartActivity extends Activity {
 	EditText edtQuantity;
 	Cursor mCursor;
 	RelativeLayout relativeLayout_parent;
+	double subtotal = 0;
+	private TextView subtotalText;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class AddToCartActivity extends Activity {
 		listView = (ListView) findViewById(R.id.listview_cart_items);
 		btnCheckout = (Button) findViewById(R.id.btnCheckOut);
 		txtNoData = (TextView) findViewById(R.id.txt_no_item);
+		subtotalText = (TextView) findViewById(R.id.txt_price);
 		relativeLayout_parent = (RelativeLayout) findViewById(R.id.relative_parent);
 
 		arrayList = new ArrayList<String>();
@@ -110,12 +113,23 @@ public class AddToCartActivity extends Activity {
 					// TODO Auto-generated method stub
 					Intent icheckout = new Intent(AddToCartActivity.this,
 							CheckoutActivity.class);
+					icheckout.putExtra("subTotal", subtotal);
 					startActivity(icheckout);
 					finish();
 
 				}
 			});
 		}
+
+		setUpTotalPrice();
+
+	}
+
+	private void setUpTotalPrice() {
+		for (int i = 0; i < arrayList_price.size(); i++) {
+			subtotal = subtotal + Double.parseDouble(arrayList_price.get(i));
+		}
+		subtotalText.setText("$" + subtotal);
 
 	}
 
@@ -206,9 +220,9 @@ public class AddToCartActivity extends Activity {
 					// TODO Auto-generated method stub
 					Log.e("arrayList_id: ", "" + arrayList_id.get(position));
 					connection.Delete_Row(" " + arrayList_id.get(position));
-					// listView.setAdapter(adapterlist);
 
 					arrayList_title.remove(arrayList_title.get(position));
+					removeFromSubTotal(arrayList_price.get(position));
 					notifyDataSetChanged();
 				}
 			});
@@ -217,6 +231,11 @@ public class AddToCartActivity extends Activity {
 
 		}
 
+		protected void removeFromSubTotal(String amtD) {
+			subtotal = subtotal - Double.parseDouble(amtD);
+			subtotalText.setText("$" + subtotal);
+
+		}
 	}
 
 	class ViewHolder {

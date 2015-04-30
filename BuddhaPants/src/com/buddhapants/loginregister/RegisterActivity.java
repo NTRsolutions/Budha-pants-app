@@ -159,7 +159,7 @@ public class RegisterActivity extends Activity {
 			jsonObject.accumulate("password_confirmation",
 					registerModal.getPwd());
 			jsonObject.accumulate("send_email_welcome", true);
-			jsonObject.accumulate("addresses", jsonArray);
+			// jsonObject.accumulate("addresses", jsonArray);
 
 			JSONObject json_Object = new JSONObject();
 			json_Object.accumulate("customer", jsonObject);
@@ -243,7 +243,6 @@ public class RegisterActivity extends Activity {
 				LogMessage.showDialog(RegisterActivity.this, null,
 						"Email has already been taken", "OK");
 			} else {
-
 				registerModal = updateUI(result);
 			}
 			Log.e("result----------", "" + result);
@@ -264,9 +263,11 @@ public class RegisterActivity extends Activity {
 					mStringlast_name, "" + src, mStringemail);
 			if (receive) {
 				Intent i = new Intent(RegisterActivity.this,
-						LoginActivity.class);
+						HomepageActivity.class);
 				startActivity(i);
+				overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 				finish();
+
 			}
 
 			// person.get

@@ -12,6 +12,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.text.SpannableString;
@@ -35,11 +36,14 @@ import com.buddhapants.AppConstant;
 import com.buddhapants.R;
 import com.buddhapants.database.MyConnection;
 import com.buddhapants.modal.ProductsModal;
+import com.buddhapants.store.StoreActivity2.GridViewAdapter;
 import com.buddhapants.ui.AddToCartActivity;
+import com.buddhapants.util.JsonParser;
 import com.buddhapants.util.LogMessage;
+import com.buddhapants.webservices.WSAdapter;
 import com.squareup.picasso.Picasso;
 
-public class ProductActivity extends Activity {
+public class ProductActivity2 extends Activity {
 
 	// CirclePageIndicator mIndicator;
 	private ViewPager _mViewPager;
@@ -52,7 +56,7 @@ public class ProductActivity extends Activity {
 			txtProduct_detaoil, txtProductdetail, txt2, txtPrice,
 			txtNotification;
 	SpannableString spannableString;
-	String key_id, JSONstr, strID, mStrtitle, variant, mString_imagespath,
+	String productKey, JSONstr, strID, mStrtitle, variant, mString_imagespath,
 			variantoption1, variantoption2, imageStr, numtest;
 	ProgressDialog pDialog;
 	JSONArray mJsonArray, mJson_Array, mJsonArrayImages, mJsonArrayImage;
@@ -81,24 +85,11 @@ public class ProductActivity extends Activity {
 		infl = (LayoutInflater) getApplicationContext().getSystemService(
 				Context.LAYOUT_INFLATER_SERVICE);
 
-		Bundle bundle = getIntent().getExtras();
-
-		key_id = bundle.getString("Key");
-		strID = bundle.getString("ID");
-		JSONstr = bundle.getString("JSON");
-		imageStr = bundle.getString("IMAGE");
-		Log.e("JSONstr----", "" + JSONstr);
-		Log.e("key_id----", "" + key_id);
-		Log.e("strID----", "" + strID);
-		// Log.e("imageStr----", "" + imageStr);
-
+		productKey = getIntent().getStringExtra("product_id");
+		imageStr = getIntent().getStringExtra("product_image");
 		arrayListImages = new ArrayList<String>();
 		arraySizes = new ArrayList<String>();
 		arrayColor = new ArrayList<String>();
-
-		if (arrayListImages.size() != 0) {
-			arrayListImages.clear();
-		}
 
 		spinner = (Spinner) findViewById(R.id.spinnerSize);
 		SpinnerColor = (Spinner) findViewById(R.id.spinnerColor);
@@ -113,9 +104,15 @@ public class ProductActivity extends Activity {
 		imageView = (ImageView) findViewById(R.id.img1);
 		addToCart = (Button) findViewById(R.id.btnAddToCart);
 		txtNotification = (TextView) findViewById(R.id.txt_notification);
-		// arrayListData = new ArrayList<String>();
-		// arrayListData = con.selectData();
-		// a = Integer.parseInt(edtQty.getText().toString());
+
+		setupButtonListener();
+
+		getProductDetailtask();
+
+		// updateUI(JSONstr);
+	}
+
+	private void setupButtonListener() {
 
 		backButton.setOnClickListener(new View.OnClickListener() {
 
@@ -130,7 +127,7 @@ public class ProductActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent iAddToCart = new Intent(ProductActivity.this,
+				Intent iAddToCart = new Intent(ProductActivity2.this,
 						AddToCartActivity.class);
 				startActivity(iAddToCart);
 				txtNotification.setVisibility(View.GONE);
@@ -161,12 +158,13 @@ public class ProductActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				boolean flag = con.insertData(mStrtitle, variantoption1, 0,
-						imageStr, variant, null, strID);
+						imageStr, variant, null, productKey);
 
 				if (flag) {
+					addone();
 					Toast.makeText(getApplicationContext(), "Added to Cart", 0)
 							.show();
-					Intent iAddToCart = new Intent(ProductActivity.this,
+					Intent iAddToCart = new Intent(ProductActivity2.this,
 							AddToCartActivity.class);
 					startActivity(iAddToCart);
 				} else {
@@ -174,16 +172,19 @@ public class ProductActivity extends Activity {
 					// 1)
 					// .show();
 				}
-				addone();
 
 			}
 		});
 
-		updateUI(JSONstr);
+	}
+
+	private void getProductDetailtask() {
+
+		new ExecuteProductDetailTask().execute(productKey);
+
 	}
 
 	public void addone() {
-		// TODO Auto-generated method stub
 		txtNotification.setVisibility(View.VISIBLE);
 		count++;
 		txtNotification.setText(String.valueOf(count));
@@ -203,7 +204,7 @@ public class ProductActivity extends Activity {
 				String body_html = jsonObject.getString("body_html")
 						.replaceAll("[^\\x00-\\x7F]", "");
 
-				if (strID.matches(id)) {
+				if (productKey.matches(id)) {
 					if (jsonObject.has("images")) {
 						mJsonArrayImages = jsonObject.getJSONArray("images");
 						for (int z = 0; z < mJsonArrayImages.length(); z++) {
@@ -247,6 +248,7 @@ public class ProductActivity extends Activity {
 
 					webView.loadDataWithBaseURL(AppConstant.STORE, body_html,
 							"text/html", "UTF-8", null);
+					break;
 
 				}
 
@@ -293,7 +295,7 @@ public class ProductActivity extends Activity {
 			@Override
 			public void onNothingSelected(AdapterView<?> parent) {
 				// TODO Auto-generated method stub
-				LogMessage.showDialog(ProductActivity.this, null,
+				LogMessage.showDialog(ProductActivity2.this, null,
 						"Please Select a size", "OK");
 			}
 		});
@@ -331,6 +333,38 @@ public class ProductActivity extends Activity {
 		int pageIndex = _adapter.addView(newPage);
 
 		_mViewPager.setCurrentItem(pageIndex, true);
+	}
+
+	class ExecuteProductDetailTask extends AsyncTask<String, Integer, String> {
+
+		@Override
+		protected String doInBackground(String... params) {
+
+			// String url = AppConstant.PRODUCT_DETAIL + params[0] + ".json";
+			// String response = WSAdapter.getJSONObject(url);
+			String response = WSAdapter.getJSONObject(AppConstant.STORE);
+			return response;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			pDialog = new ProgressDialog(ProductActivity2.this);
+			pDialog.setMessage("Loading...");
+			pDialog.setCancelable(false);
+			pDialog.show();
+		}
+
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+
+			pDialog.dismiss();
+			if (result != null) {
+				updateUI(result);
+			}
+
+		}
+
 	}
 
 }
