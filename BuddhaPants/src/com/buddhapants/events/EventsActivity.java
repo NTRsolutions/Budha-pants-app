@@ -28,7 +28,6 @@ import android.widget.TextView;
 import com.buddhapants.AppConstant;
 import com.buddhapants.R;
 import com.buddhapants.modal.PagesModal;
-import com.buddhapants.store.StoreActivity;
 import com.buddhapants.ui.AddToCartActivity;
 import com.buddhapants.util.ConnectionDetector;
 import com.buddhapants.webservices.WSAdapter;
