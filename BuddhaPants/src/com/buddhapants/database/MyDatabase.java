@@ -17,6 +17,7 @@ public class MyDatabase extends SQLiteOpenHelper {
 	public static String TCPRICE = "price";
 	public static String TCQTY = "qty";
 	public static String TKEY = "id";
+	public static String TTOTAL = "total";
 	public static String TCIMAGE = "image";
 
 	public static String TCFNAME = "first_name";
@@ -29,12 +30,12 @@ public class MyDatabase extends SQLiteOpenHelper {
 
 	public static String QUERY = "create table " + TABLENAME + " ( " + TCTITLE
 			+ " TEXT not null, " + TCSIZE + " TEXT not null, " + TCPRICE
-			+ " varchar, " + TCQTY + " int," + TCIMAGE + " varchar," + TKEY
-			+ " varchar)";
+			+ " varchar, " + TTOTAL + " varchar, " + TCQTY + " int," + TCIMAGE
+			+ " varchar," + TKEY + " INTEGER UNIQUE NOT NULL PRIMARY KEY)";
 
-	public static String QUERY_REGISTER = "create table " + TABLENAME_REGISTER + " ( "
-			+ TCFNAME + " TEXT not null, " + TCLASTNAME + " TEXT not null, "
-			+ TCEMAIL + " varchar, " + TCID + " varchar)";
+	public static String QUERY_REGISTER = "create table " + TABLENAME_REGISTER
+			+ " ( " + TCFNAME + " TEXT not null, " + TCLASTNAME
+			+ " TEXT not null, " + TCEMAIL + " varchar, " + TCID + " varchar)";
 
 	public static String QUERY_LOGIN = "create table " + TABLENAME_LOGIN
 			+ " ( " + TABLENAME_LOGIN_id + " int, " + TABLENAME_LOGIN_email

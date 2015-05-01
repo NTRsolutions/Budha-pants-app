@@ -97,6 +97,7 @@
                     android:textSize="18sp" />
 
                 <EditText
+                    android:id="@+id/firstName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -133,6 +134,7 @@
                     android:textSize="18sp" />
 
                 <EditText
+                    android:id="@+id/lastName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -169,13 +171,14 @@
                     android:textSize="18sp" />
 
                 <EditText
+                    android:id="@+id/company"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="20"
                     android:background="@android:color/white"
-                    android:hint="Company"
+                    android:hint="Company (Optional)"
                     android:singleLine="true"
                     android:textColor="@android:color/black"
                     android:textSize="18sp" />
@@ -205,6 +208,7 @@
                     android:textSize="18sp" />
 
                 <EditText
+                    android:id="@+id/address"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -241,13 +245,14 @@
                     android:textSize="18sp" />
 
                 <EditText
+                    android:id="@+id/suite"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="20"
                     android:background="@android:color/white"
-                    android:hint="Apt, suite, etc"
+                    android:hint="Apt, suite, etc (Optional)"
                     android:singleLine="true"
                     android:textColor="@android:color/black"
                     android:textSize="18sp" />
@@ -277,6 +282,7 @@
                     android:textSize="18sp" />
 
                 <EditText
+                    android:id="@+id/city"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -313,6 +319,7 @@
                     android:textSize="18sp" />
 
                 <EditText
+                    android:id="@+id/country"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -349,6 +356,7 @@
                     android:textSize="18sp" />
 
                 <EditText
+                    android:id="@+id/state"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -385,6 +393,7 @@
                     android:textSize="18sp" />
 
                 <EditText
+                    android:id="@+id/postalCode"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -392,6 +401,7 @@
                     android:layout_weight="20"
                     android:background="@android:color/white"
                     android:hint="Postal code"
+                    android:inputType="number"
                     android:singleLine="true"
                     android:textColor="@android:color/black"
                     android:textSize="18sp" />
@@ -421,6 +431,7 @@
                     android:textSize="18sp" />
 
                 <EditText
+                    android:id="@+id/number"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -428,6 +439,7 @@
                     android:layout_weight="20"
                     android:background="@android:color/white"
                     android:hint="Phone"
+                    android:inputType="phone"
                     android:singleLine="true"
                     android:textColor="@android:color/black"
                     android:textSize="18sp" />

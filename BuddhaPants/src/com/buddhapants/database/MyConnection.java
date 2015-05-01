@@ -12,8 +12,8 @@ public class MyConnection {
 	public MyDatabase mydb;
 	public SQLiteDatabase sqdb;
 	String allcolumn[] = { MyDatabase.TCTITLE, MyDatabase.TCSIZE,
-			MyDatabase.TCPRICE, MyDatabase.TCQTY, MyDatabase.TCIMAGE,
-			MyDatabase.TKEY };
+			MyDatabase.TCPRICE, MyDatabase.TTOTAL, MyDatabase.TCQTY,
+			MyDatabase.TCIMAGE, MyDatabase.TKEY };
 	String allcolumnRegister[] = { MyDatabase.TCFNAME, MyDatabase.TCLASTNAME,
 			MyDatabase.TCEMAIL, MyDatabase.TCID };
 
@@ -32,13 +32,13 @@ public class MyConnection {
 	public boolean insertData(String title, String size, int qty, String image,
 			String price, String total, String id) {
 		boolean flag = false;
+		ContentValues cv = new ContentValues();
 		try {
-			ContentValues cv = new ContentValues();
 			cv.put(MyDatabase.TCTITLE, title);
 			cv.put(MyDatabase.TCSIZE, size);
 			cv.put(MyDatabase.TCPRICE, price);
+			cv.put(MyDatabase.TTOTAL, total);
 			cv.put(MyDatabase.TCQTY, qty);
-
 			cv.put(MyDatabase.TCIMAGE, image);
 			cv.put(MyDatabase.TKEY, id);
 
@@ -46,9 +46,15 @@ public class MyConnection {
 			Log.e("row----", "" + row);
 			if (row > 0) {
 				flag = true;
+			} else {
+				long rowChange = sqdb.update(MyDatabase.TABLENAME, cv,
+						MyDatabase.TKEY + " = ?", new String[] { id });
+				if (rowChange == 1) {
+					flag = true;
+				}
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			flag = false;
 		}
 		return flag;
 	}

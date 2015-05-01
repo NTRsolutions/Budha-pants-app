@@ -30,32 +30,26 @@ import com.buddhapants.modal.RegisterModal;
 
 public class WSAdapter {
 
-	static InputStream is = null;
-	static JSONObject jObj = null;
-	static String json = "";
-
 	public static String getJSONObject(String url) {
 
 		// Making HTTP request
+		String json = "";
+		InputStream is = null;
 		try {
-			// Log.e("Enter=======", "yaufusfhikswefhuskhgkiski");
-			// defaultHttpClient
 			HttpParams httpParams = new BasicHttpParams();
 
-			int some_reasonable_timeout = (int) (70 * 1000);
+			int some_reasonable_timeout = (int) (30 * 1000);
 			HttpConnectionParams.setConnectionTimeout(httpParams,
 					some_reasonable_timeout);
 			HttpConnectionParams.setSoTimeout(httpParams,
 					some_reasonable_timeout);
 			DefaultHttpClient httpclient = new DefaultHttpClient();
-			@SuppressWarnings("unused")
 			UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(
 					AppConstant.API_KEY, AppConstant.PASSWORD);
 			AuthScope authScope = new AuthScope(AuthScope.ANY_HOST,
 					AuthScope.ANY_PORT);
 			httpclient.getCredentialsProvider().setCredentials(authScope,
 					credentials);
-			HttpContext localContext = new BasicHttpContext();
 
 			HttpGet httpGet = new HttpGet(url);
 
@@ -106,65 +100,67 @@ public class WSAdapter {
 
 	}
 
-//	public static String postJSONObject(String url, RegisterModal registerModal) {
-//		HttpResponse response;
-//		String result = "";
-//		try {
-//			Log.e("String Response?????", "enter this method");
-//			// defaultHttpClient
-//			HttpParams httpParams = new BasicHttpParams();
-//			int some_reasonable_timeout = (int) (70 * 1000);
-//			HttpConnectionParams.setConnectionTimeout(httpParams,
-//					some_reasonable_timeout);
-//			HttpConnectionParams.setSoTimeout(httpParams,
-//					some_reasonable_timeout);
-//			DefaultHttpClient httpclient = new DefaultHttpClient();
-//			@SuppressWarnings("unused")
-//			UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(
-//					AppConstant.API_KEY, AppConstant.PASSWORD);
-//			AuthScope authScope = new AuthScope(AuthScope.ANY_HOST,
-//					AuthScope.ANY_PORT);
-//			httpclient.getCredentialsProvider().setCredentials(authScope,
-//					credentials);
-//			String json = "";
-//			StringEntity se = new StringEntity(json);
-//			HttpPost httpPost = new HttpPost(url);
-//			httpPost.addHeader("Content-Type", "application/json");
-//			httpPost.addHeader("Accept", "application/json");
-//			httpPost.setEntity(se);
-//			// HttpResponse response = null;
-//			response = httpclient.execute(httpPost);
-//
-//			HttpEntity entity = response.getEntity();
-//			is = entity.getContent();
-//		} catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
-//		} catch (ClientProtocolException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//
-//		try {
-//			BufferedReader reader = new BufferedReader(new InputStreamReader(
-//					is, "iso-8859-1"), 8);
-//			StringBuilder sb = new StringBuilder();
-//			String line = null;
-//			while ((line = reader.readLine()) != null) {
-//				sb.append(line + "");
-//			}
-//			is.close();
-//
-//			// Log.d("value response", sb.toString());
-//			json = sb.toString();
-//
-//		} catch (Exception e) {
-//			Log.e("Buffer Error", "Error converting result " + e.toString());
-//		}
-//		// try parse the string to a JSON object
-//		// return JSON String
-//		return result;
-//
-//	}
+	// public static String postJSONObject(String url, RegisterModal
+	// registerModal) {
+	// HttpResponse response;
+	// String result = "";
+	// try {
+	// Log.e("String Response?????", "enter this method");
+	// // defaultHttpClient
+	// HttpParams httpParams = new BasicHttpParams();
+	// int some_reasonable_timeout = (int) (70 * 1000);
+	// HttpConnectionParams.setConnectionTimeout(httpParams,
+	// some_reasonable_timeout);
+	// HttpConnectionParams.setSoTimeout(httpParams,
+	// some_reasonable_timeout);
+	// DefaultHttpClient httpclient = new DefaultHttpClient();
+	// @SuppressWarnings("unused")
+	// UsernamePasswordCredentials credentials = new
+	// UsernamePasswordCredentials(
+	// AppConstant.API_KEY, AppConstant.PASSWORD);
+	// AuthScope authScope = new AuthScope(AuthScope.ANY_HOST,
+	// AuthScope.ANY_PORT);
+	// httpclient.getCredentialsProvider().setCredentials(authScope,
+	// credentials);
+	// String json = "";
+	// StringEntity se = new StringEntity(json);
+	// HttpPost httpPost = new HttpPost(url);
+	// httpPost.addHeader("Content-Type", "application/json");
+	// httpPost.addHeader("Accept", "application/json");
+	// httpPost.setEntity(se);
+	// // HttpResponse response = null;
+	// response = httpclient.execute(httpPost);
+	//
+	// HttpEntity entity = response.getEntity();
+	// is = entity.getContent();
+	// } catch (UnsupportedEncodingException e) {
+	// e.printStackTrace();
+	// } catch (ClientProtocolException e) {
+	// e.printStackTrace();
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// }
+	//
+	// try {
+	// BufferedReader reader = new BufferedReader(new InputStreamReader(
+	// is, "iso-8859-1"), 8);
+	// StringBuilder sb = new StringBuilder();
+	// String line = null;
+	// while ((line = reader.readLine()) != null) {
+	// sb.append(line + "");
+	// }
+	// is.close();
+	//
+	// // Log.d("value response", sb.toString());
+	// json = sb.toString();
+	//
+	// } catch (Exception e) {
+	// Log.e("Buffer Error", "Error converting result " + e.toString());
+	// }
+	// // try parse the string to a JSON object
+	// // return JSON String
+	// return result;
+	//
+	// }
 
 }

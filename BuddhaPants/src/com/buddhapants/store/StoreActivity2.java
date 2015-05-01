@@ -214,8 +214,7 @@ public class StoreActivity2 extends Activity {
 
 		@Override
 		protected void onPreExecute() {
-			// TODO Auto-generated method stub
-			super.onPreExecute();
+			pDialog = new ProgressDialog(StoreActivity2.this);
 			pDialog.setMessage("Loading...");
 			pDialog.setCancelable(false);
 			pDialog.show();

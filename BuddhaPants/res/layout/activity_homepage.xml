@@ -106,12 +106,13 @@
             <com.buddhapants.ui.GridViewScrollable
                 android:id="@+id/gridviewfeatured"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="400dp"
                 android:layout_below="@+id/imgCollection"
                 android:columnWidth="100dp"
                 android:gravity="center"
                 android:horizontalSpacing="2dp"
                 android:numColumns="2"
+                android:scrollbars="none"
                 android:stretchMode="columnWidth" >
             </com.buddhapants.ui.GridViewScrollable>
         </RelativeLayout>

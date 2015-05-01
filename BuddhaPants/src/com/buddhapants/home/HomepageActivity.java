@@ -72,7 +72,6 @@ public class HomepageActivity extends Activity {
 
 		gridView = (GridViewScrollable) findViewById(R.id.gridviewfeatured);
 		checkInternet();
-		pDialog = new ProgressDialog(this);
 		new ExecutePages().execute();
 		btn_nav.setOnClickListener(new View.OnClickListener() {
 
@@ -163,24 +162,10 @@ public class HomepageActivity extends Activity {
 		}
 
 		@Override
-		protected void onPreExecute() {
-			// TODO Auto-generated method stub
-			super.onPreExecute();
-
-			pDialog.setMessage("Loading...");
-			pDialog.setCancelable(false);
-			pDialog.show();
-		}
-
-		@Override
 		protected void onPostExecute(String result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-
 			pagesModal = updateUI(result);
-			pDialog.dismiss();
-			// Log.e("result:", "" + result);
-			// Log.e("pagesModal:", "" + pagesModal);
 		}
 
 	}
@@ -198,8 +183,8 @@ public class HomepageActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 			// TODO Auto-generated method stub
-			super.onPreExecute();
-			pDialog.setMessage("Loading...");
+			pDialog = new ProgressDialog(HomepageActivity.this);
+			pDialog.setMessage("Loading Products...");
 			pDialog.setCancelable(false);
 			pDialog.show();
 		}
@@ -207,13 +192,13 @@ public class HomepageActivity extends Activity {
 		protected void onPostExecute(String result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-
+			if (pDialog.isShowing()) {
+				pDialog.dismiss();
+			}
 			listStoreModal = updateUI(result);
-
 			gridadapter = new GridViewAdapter(HomepageActivity.this,
 					listStoreModal);
 			gridView.setAdapter(gridadapter);
-			pDialog.dismiss();
 		}
 
 		public List<ImageModal> updateUI(String result) {

@@ -34,41 +34,63 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/txt_cart_item_size"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txt_cart_price"
-        android:layout_below="@+id/txt_cart_title"
-        android:layout_marginTop="3dp"
-        android:text="(L)"
-        android:textColor="@color/color_cyan"
-        android:textSize="14sp" />
-
-    <TextView
         android:id="@+id/txt_cart_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/txt_cart_title"
-        android:layout_below="@+id/txt_cart_item_size"
+        android:layout_below="@+id/txt_cart_title"
         android:layout_marginTop="3dp"
         android:text="$79.95"
         android:textColor="@color/color_cyan"
         android:textSize="14sp" />
 
-<!--     <EditText -->
-<!--         android:id="@+id/edtQty" -->
-<!--         android:layout_width="25dp" -->
-<!--         android:layout_height="30dp" -->
-<!--         android:layout_alignParentRight="true" -->
-<!--         android:layout_alignTop="@+id/txt_cart_price" -->
-<!--         android:layout_below="@+id/txt_cart_item_size" -->
-<!--         android:layout_marginRight="5dp" -->
-<!--         android:background="@drawable/edittext_selector_cyan" -->
-<!--         android:gravity="center" -->
-<!--         android:numeric="integer" -->
-<!--         android:singleLine="true" -->
-<!--         android:maxLength="2" -->
-<!--         android:textColor="@color/color_cyan" /> -->
+    <TextView
+        android:id="@+id/txt_cart_item_size"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txt_cart_price"
+        android:layout_below="@+id/txt_cart_price"
+        android:layout_marginTop="3dp"
+        android:text="(L)"
+        android:textColor="@color/color_cyan"
+        android:textSize="14sp" />
+
+    <!-- <TextView -->
+    <!-- android:id="@+id/txt_cart_total_price" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_alignLeft="@+id/txt_cart_title" -->
+    <!-- android:layout_below="@+id/txt_cart_price" -->
+    <!-- android:layout_marginTop="3dp" -->
+    <!-- android:text="Total: $79.95" -->
+    <!-- android:textColor="@color/color_cyan" -->
+    <!-- android:textSize="14sp" /> -->
+
+    <TextView
+        android:id="@+id/txt_cart_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txt_cart_title"
+        android:layout_below="@+id/txt_cart_item_size"
+        android:layout_marginTop="3dp"
+        android:text="Qty:"
+        android:textColor="@color/color_cyan"
+        android:textSize="14sp" />
+
+    <!-- <EditText -->
+    <!-- android:id="@+id/edtQty" -->
+    <!-- android:layout_width="25dp" -->
+    <!-- android:layout_height="30dp" -->
+    <!-- android:layout_alignParentRight="true" -->
+    <!-- android:layout_alignTop="@+id/txt_cart_price" -->
+    <!-- android:layout_below="@+id/txt_cart_item_size" -->
+    <!-- android:layout_marginRight="5dp" -->
+    <!-- android:background="@drawable/edittext_selector_cyan" -->
+    <!-- android:gravity="center" -->
+    <!-- android:numeric="integer" -->
+    <!-- android:singleLine="true" -->
+    <!-- android:maxLength="2" -->
+    <!-- android:textColor="@color/color_cyan" /> -->
 
     <Button
         android:id="@+id/buttonRemove"

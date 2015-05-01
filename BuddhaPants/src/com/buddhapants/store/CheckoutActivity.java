@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -36,6 +37,21 @@ public class CheckoutActivity extends Activity {
 	private static final int REQUEST_PAYPAL_PAYMENT = 1;
 
 	double subTotal;
+
+	private EditText editFirstName;
+	private EditText editLastName;
+	private EditText editCompany;
+	private EditText editAddress;
+	private EditText editSuite;
+	private EditText editCity;
+	private EditText editCountry;
+	private EditText editState;
+	private EditText editPostal;
+	private EditText editNum;
+
+	private String firstName, lastName, company, address, suite, city, country,
+			state, postal, num;
+
 	private static PayPalConfiguration config = new PayPalConfiguration()
 			.environment(CONFIG_ENVIRONMENT)
 			.clientId(CONFIG_CLIENT_ID)
@@ -50,10 +66,21 @@ public class CheckoutActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		subTotal = getIntent().getExtras().getDouble("subTotal");
 		setContentView(R.layout.activity_checkout);
 		buttonback = (ImageButton) findViewById(R.id.btn_back);
 		buttonContinue = (Button) findViewById(R.id.btnContinue);
-		subTotal = getIntent().getExtras().getDouble("subTotal");
+		editFirstName = (EditText) findViewById(R.id.firstName);
+		editLastName = (EditText) findViewById(R.id.lastName);
+		editCompany = (EditText) findViewById(R.id.company);
+		editAddress = (EditText) findViewById(R.id.address);
+		editSuite = (EditText) findViewById(R.id.suite);
+		editCity = (EditText) findViewById(R.id.city);
+		editCountry = (EditText) findViewById(R.id.country);
+		editState = (EditText) findViewById(R.id.state);
+		editPostal = (EditText) findViewById(R.id.postalCode);
+		editNum = (EditText) findViewById(R.id.number);
+
 		initPayPal();
 		setupListener();
 
@@ -73,19 +100,87 @@ public class CheckoutActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 
-				PayPalPayment thingToBuy = new PayPalPayment(new BigDecimal(
-						subTotal), "USD", "buddhapants.com",
-						PayPalPayment.PAYMENT_INTENT_SALE);
+				if (Validate()) {
+					PayPalPayment thingToBuy = new PayPalPayment(
+							new BigDecimal(subTotal), "USD", "buddhapants.com",
+							PayPalPayment.PAYMENT_INTENT_SALE);
 
-				Intent intent = new Intent(CheckoutActivity.this,
-						PaymentActivity.class);
+					Intent intent = new Intent(CheckoutActivity.this,
+							PaymentActivity.class);
 
-				intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
+					intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
 
-				startActivityForResult(intent, REQUEST_PAYPAL_PAYMENT);
+					startActivityForResult(intent, REQUEST_PAYPAL_PAYMENT);
+
+				}
+
 			}
 		});
 
+	}
+
+	protected boolean Validate() {
+		firstName = editFirstName.getText().toString().trim();
+		lastName = editLastName.getText().toString().trim();
+		company = editCompany.getText().toString().trim();
+		address = editAddress.getText().toString().trim();
+		suite = editSuite.getText().toString().trim();
+		city = editCity.getText().toString().trim();
+		country = editCountry.getText().toString().trim();
+		state = editState.getText().toString().trim();
+		postal = editPostal.getText().toString().trim();
+		num = editNum.getText().toString().trim();
+
+		if (firstName.equals("")) {
+			editFirstName.setError("can't be blank");
+			return false;
+		} else {
+			editFirstName.setError(null);
+		}
+		if (lastName.equals("")) {
+			editLastName.setError("can't be blank");
+			return false;
+		} else {
+			editLastName.setError(null);
+		}
+		if (address.equals("")) {
+			editAddress.setError("can't be blank");
+			return false;
+		} else {
+			editAddress.setError(null);
+		}
+		if (city.equals("")) {
+			editCity.setError("can't be blank");
+			return false;
+		} else {
+			editCity.setError(null);
+		}
+		if (country.equals("")) {
+			editCountry.setError("can't be blank");
+			return false;
+		} else {
+			editCountry.setError(null);
+		}
+		if (state.equals("")) {
+			editState.setError("can't be blank");
+			return false;
+		} else {
+			editState.setError(null);
+		}
+		if (postal.equals("")) {
+			editPostal.setError("can't be blank");
+			return false;
+		} else {
+			editPostal.setError(null);
+		}
+		if (num.equals("")) {
+			editNum.setError("can't be blank");
+			return false;
+		} else {
+			editNum.setError(null);
+		}
+
+		return true;
 	}
 
 	private void initPayPal() {

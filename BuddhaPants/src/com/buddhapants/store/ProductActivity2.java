@@ -1,5 +1,6 @@
 package com.buddhapants.store;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -22,7 +23,6 @@ import android.text.SpannableString;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
-import android.webkit.WebStorage.QuotaUpdater;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -90,7 +90,6 @@ public class ProductActivity2 extends FragmentActivity {
 		_mViewPager = (ViewPager) findViewById(R.id.viewPager);
 
 		productKey = getIntent().getStringExtra("product_id");
-		imageStr = getIntent().getStringExtra("product_image");
 		arrayListImages = new ArrayList<String>();
 		arraySizes = new ArrayList<String>();
 		arrayColor = new ArrayList<String>();
@@ -188,8 +187,14 @@ public class ProductActivity2 extends FragmentActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				if (validate()) {
+
+					DecimalFormat df = new DecimalFormat("#.00");
+					double priceValue = Double.parseDouble(price);
+					double subtotal_price = quantity * priceValue;
+
 					boolean flag = con.insertData(title, valueSizeFromSpinner,
-							quantity, image, price, null, productKey);
+							quantity, image, df.format(priceValue),
+							df.format(subtotal_price), productKey);
 
 					if (flag) {
 						addone();
@@ -213,18 +218,18 @@ public class ProductActivity2 extends FragmentActivity {
 
 	protected boolean validate() {
 		String quantityString = edtQty.getText().toString();
+		if (valueSizeFromSpinner.toLowerCase(Locale.getDefault()).equals(
+				"select size")) {
+			Toast.makeText(ProductActivity2.this, "Please select size ",
+					Toast.LENGTH_SHORT).show();
+			return false;
+		}
 		if (quantityString.trim().equals("")) {
-			LogMessage.showDialog(ProductActivity2.this, "Quantity",
-					"Plase enter qunatity", "OK");
+			Toast.makeText(ProductActivity2.this, "Please enter quantity ",
+					Toast.LENGTH_SHORT).show();
 			return false;
 		} else {
 			quantity = Integer.parseInt(quantityString);
-		}
-		if (valueSizeFromSpinner.toLowerCase(Locale.getDefault()).equals(
-				"select size")) {
-			LogMessage.showDialog(ProductActivity2.this, "Size",
-					"Plase select size", "OK");
-			return false;
 		}
 
 		return true;
@@ -237,9 +242,18 @@ public class ProductActivity2 extends FragmentActivity {
 	}
 
 	public void addone() {
-		txtNotification.setVisibility(View.VISIBLE);
-		cartSize = cartSize + 1;
-		txtNotification.setText(String.valueOf(cartSize));
+		Cursor curser = con.selectData();
+		cartSize = curser.getCount();
+
+		if (cartSize > 0) {
+			txtNotification.setVisibility(View.VISIBLE);
+			txtNotification.setText(String.valueOf(cartSize));
+		} else {
+			txtNotification.setVisibility(View.GONE);
+		}
+		// txtNotification.setVisibility(View.VISIBLE);
+		// cartSize = cartSize + 1;
+		// txtNotification.setText(String.valueOf(cartSize));
 	}
 
 	class ExecuteProductDetailTask extends AsyncTask<String, Integer, String> {
@@ -300,6 +314,9 @@ public class ProductActivity2 extends FragmentActivity {
 			} else {
 				image = "";
 			}
+			if (htmlContent.equals("null")) {
+				htmlContent = "";
+			}
 
 			setupSpinner();
 			setupViewPager();
@@ -332,7 +349,8 @@ public class ProductActivity2 extends FragmentActivity {
 		if (arraySizes != null && arraySizes.size() != 0) {
 			arrayAdapter = new ArrayAdapter<String>(getApplicationContext(),
 					R.layout.custom_spinner_item, arraySizes);
-			arrayAdapter.setDropDownViewResource(R.layout.custom_spinner_item);
+			arrayAdapter
+					.setDropDownViewResource(R.layout.custom_spinner_item_dropdown);
 
 			spinner.setAdapter(arrayAdapter);
 			spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -358,7 +376,7 @@ public class ProductActivity2 extends FragmentActivity {
 			arrAdapterColor = new ArrayAdapter<String>(getApplicationContext(),
 					R.layout.custom_spinner_item, arrayColor);
 			arrAdapterColor
-					.setDropDownViewResource(R.layout.custom_spinner_item);
+					.setDropDownViewResource(R.layout.custom_spinner_item_dropdown);
 			SpinnerColor.setAdapter(arrAdapterColor);
 			SpinnerColor
 					.setOnItemSelectedListener(new OnItemSelectedListener() {

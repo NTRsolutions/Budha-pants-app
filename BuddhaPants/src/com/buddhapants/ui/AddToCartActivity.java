@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.buddhapants.R;
 import com.buddhapants.database.MyConnection;
@@ -37,6 +38,7 @@ public class AddToCartActivity extends Activity {
 	ArrayList<String> arrayList_qty;
 	ArrayList<String> arrayList_image;
 	ArrayList<String> arrayList_id;
+	private ArrayList<String> arrayList_total_price;
 	ImageView imgProduct;
 	TextView txtTitle, txtSize, txtPrice, txtNoData;
 	EditText edtQuantity;
@@ -44,6 +46,7 @@ public class AddToCartActivity extends Activity {
 	RelativeLayout relativeLayout_parent;
 	double subtotal = 0;
 	private TextView subtotalText;
+	private int cartSize = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,73 +64,88 @@ public class AddToCartActivity extends Activity {
 		arrayList_title = new ArrayList<String>();
 		arrayList_size = new ArrayList<String>();
 		arrayList_price = new ArrayList<String>();
+		arrayList_total_price = new ArrayList<String>();
 		arrayList_qty = new ArrayList<String>();
 		arrayList_image = new ArrayList<String>();
 		arrayList_id = new ArrayList<String>();
 
-		try {
-			mCursor = connection.selectData();
-		} catch (Exception e) {
+		initCartItem();
 
-			e.printStackTrace();
-		}
-
-		// mCursor.moveToFirst();
-		if (mCursor.getCount() != 0) {
-
-			arrayList_title.clear();
-			do {
-
-				arrayList_title.add(mCursor.getString(0).trim());
-				arrayList_size.add(mCursor.getString(1).trim());
-				arrayList_price.add(mCursor.getString(2).trim());
-				arrayList_qty.add(mCursor.getString(3).trim());
-				arrayList_image.add(mCursor.getString(4).trim());
-				arrayList_id.add(mCursor.getString(5).trim());
-
-			} while (mCursor.moveToNext());
-
-			mCursor.close();
-			// connection.close();
-
-			adapterlist = new ListAdapter(arrayList_title, arrayList_size,
-					arrayList_price, arrayList_qty, arrayList_image,
-					arrayList_id, arrayList);
-			listView.setAdapter(adapterlist);
-
-			relativeLayout_parent
-					.setOnClickListener(new View.OnClickListener() {
-
-						@Override
-						public void onClick(View v) {
-							// TODO Auto-generated method stub
-							finish();
-						}
-					});
-
-			btnCheckout.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					Intent icheckout = new Intent(AddToCartActivity.this,
-							CheckoutActivity.class);
-					icheckout.putExtra("subTotal", subtotal);
-					startActivity(icheckout);
-					finish();
-
-				}
-			});
-		}
+		setUpButtonListener();
 
 		setUpTotalPrice();
 
 	}
 
-	private void setUpTotalPrice() {
-		for (int i = 0; i < arrayList_price.size(); i++) {
-			subtotal = subtotal + Double.parseDouble(arrayList_price.get(i));
+	private void initCartItem() {
+		try {
+			mCursor = connection.selectData();
+
+			// mCursor.moveToFirst();
+			if (mCursor.getCount() != 0) {
+
+				arrayList_title.clear();
+				do {
+
+					arrayList_title.add(mCursor.getString(0).trim());
+					arrayList_size.add(mCursor.getString(1).trim());
+					arrayList_price.add(mCursor.getString(2).trim());
+					arrayList_total_price.add(mCursor.getString(3).trim());
+					arrayList_qty.add(mCursor.getString(4).trim());
+					arrayList_image.add(mCursor.getString(5).trim());
+					arrayList_id.add(mCursor.getString(6).trim());
+
+				} while (mCursor.moveToNext());
+
+				mCursor.close();
+				// connection.close();
+
+				adapterlist = new ListAdapter(arrayList_title, arrayList_size,
+						arrayList_price, arrayList_total_price, arrayList_qty,
+						arrayList_image, arrayList_id, arrayList);
+				listView.setAdapter(adapterlist);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+	}
+
+	private void setUpButtonListener() {
+		relativeLayout_parent.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+
+		btnCheckout.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if (cartSize > 0) {
+					Intent icheckout = new Intent(AddToCartActivity.this,
+							CheckoutActivity.class);
+					icheckout.putExtra("subTotal", subtotal);
+					startActivity(icheckout);
+					finish();
+				} else {
+					Toast.makeText(AddToCartActivity.this, "Cart is Empty",
+							Toast.LENGTH_SHORT).show();
+				}
+
+			}
+		});
+	}
+
+	private void setUpTotalPrice() {
+		for (int i = 0; i < arrayList_total_price.size(); i++) {
+			subtotal = subtotal
+					+ Double.parseDouble(arrayList_total_price.get(i));
+		}
+		cartSize = arrayList_price.size();
 		subtotalText.setText("$" + subtotal);
 
 	}
@@ -138,6 +156,7 @@ public class AddToCartActivity extends Activity {
 		ArrayList<String> arrayList_title;
 		ArrayList<String> arrayList_size;
 		ArrayList<String> arrayList_price;
+		ArrayList<String> arrayList_total_price;
 		ArrayList<String> arrayList_qty;
 		ArrayList<String> arrayList_image;
 		ArrayList<String> arrayList_id;
@@ -145,6 +164,7 @@ public class AddToCartActivity extends Activity {
 		public ListAdapter(ArrayList<String> arrayList_title,
 				ArrayList<String> arrayList_size,
 				ArrayList<String> arrayList_price,
+				ArrayList<String> arrayList_total_price,
 				ArrayList<String> arrayList_qty,
 				ArrayList<String> arrayList_image,
 				ArrayList<String> arrayList_id, ArrayList<String> arrayList) {
@@ -152,6 +172,7 @@ public class AddToCartActivity extends Activity {
 			this.arrayList_title = arrayList_title;
 			this.arrayList_size = arrayList_size;
 			this.arrayList_price = arrayList_price;
+			this.arrayList_total_price = arrayList_total_price;
 			this.arrayList_qty = arrayList_qty;
 			this.arrayList_image = arrayList_image;
 			this.arrayList_id = arrayList_id;
@@ -195,6 +216,10 @@ public class AddToCartActivity extends Activity {
 						.findViewById(R.id.txt_cart_title);
 				holder.txtPrice = (TextView) convertView
 						.findViewById(R.id.txt_cart_price);
+				// holder.txtTotalPrice = (TextView) convertView
+				// .findViewById(R.id.txt_cart_total_price);
+				holder.txtQuant = (TextView) convertView
+						.findViewById(R.id.txt_cart_quantity);
 				holder.txtSize = (TextView) convertView
 						.findViewById(R.id.txt_cart_item_size);
 				holder.btnRemove = (Button) convertView
@@ -205,8 +230,11 @@ public class AddToCartActivity extends Activity {
 				holder = (ViewHolder) convertView.getTag();
 			}
 			holder.txtTitle.setText(arrayList_title.get(position));
-			holder.txtPrice.setText(arrayList_price.get(position));
-			holder.txtSize.setText(arrayList_size.get(position));
+			holder.txtPrice.setText("$" + arrayList_total_price.get(position));
+			// holder.txtTotalPrice.setText("Total Price : "
+			// + arrayList_total_price.get(position));
+			holder.txtSize.setText("(" + arrayList_size.get(position) + ")");
+			holder.txtQuant.setText("Qty : " + arrayList_qty.get(position));
 			Picasso.with(getApplicationContext())
 					.load(arrayList_image.get(position))
 					.into(holder.imgProduct);
@@ -221,7 +249,7 @@ public class AddToCartActivity extends Activity {
 					connection.Delete_Row(" " + arrayList_id.get(position));
 
 					arrayList_title.remove(arrayList_title.get(position));
-					removeFromSubTotal(arrayList_price.get(position));
+					removeFromSubTotal(arrayList_total_price.get(position));
 					notifyDataSetChanged();
 				}
 			});
@@ -232,13 +260,19 @@ public class AddToCartActivity extends Activity {
 
 		protected void removeFromSubTotal(String amtD) {
 			subtotal = subtotal - Double.parseDouble(amtD);
-			subtotalText.setText("$" + subtotal);
+			cartSize = cartSize - 1;
+			if (subtotal <= 0.0) {
+				subtotalText.setText("$" + 0.0);
+			} else {
+				subtotalText.setText("$" + subtotal);
+
+			}
 
 		}
 	}
 
 	class ViewHolder {
-		TextView txtTitle, txtPrice, txtSize;
+		TextView txtTitle, txtPrice, txtSize, txtQuant, txtTotalPrice;
 		ImageView imgProduct;
 		Button btnRemove;
 	}
