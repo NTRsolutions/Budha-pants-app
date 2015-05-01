@@ -67,7 +67,6 @@ public class AddToCartActivity extends Activity {
 
 		try {
 			mCursor = connection.selectData();
-			Log.i("value in cursor at starting", mCursor.getCount() + "");
 		} catch (Exception e) {
 
 			e.printStackTrace();

@@ -2,24 +2,27 @@ package com.buddhapants.store;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.nodes.Element;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ResolveInfo;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.SpannableString;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebStorage.QuotaUpdater;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -27,7 +30,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,43 +38,48 @@ import com.buddhapants.AppConstant;
 import com.buddhapants.R;
 import com.buddhapants.database.MyConnection;
 import com.buddhapants.modal.ProductsModal;
-import com.buddhapants.store.StoreActivity2.GridViewAdapter;
 import com.buddhapants.ui.AddToCartActivity;
 import com.buddhapants.util.JsonParser;
 import com.buddhapants.util.LogMessage;
 import com.buddhapants.webservices.WSAdapter;
-import com.squareup.picasso.Picasso;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
-public class ProductActivity2 extends Activity {
+public class ProductActivity2 extends FragmentActivity {
 
 	// CirclePageIndicator mIndicator;
-	private ViewPager _mViewPager;
-	LayoutInflater inflater;
+
 	EditText edtQty;
-	LayoutInflater infl;
 	ImageButton backButton, imgaddtoCart, imgFacebook;
-	List<ResolveInfo> activityList;
 	TextView txtTitle, txt_product_title, txtProductDescription,
 			txtProduct_detaoil, txtProductdetail, txt2, txtPrice,
 			txtNotification;
 	SpannableString spannableString;
 	String productKey, JSONstr, strID, mStrtitle, variant, mString_imagespath,
 			variantoption1, variantoption2, imageStr, numtest;
-	ProgressDialog pDialog;
-	JSONArray mJsonArray, mJson_Array, mJsonArrayImages, mJsonArrayImage;
-	List<ProductsModal> listProductsModal;
-	Element tagTitle, tagAbout, tagQuote, tagDetail, tagDetails;
-	WebView webView;
-	JSONObject jsonVariants;
-	ArrayList<String> arrayListImages, arrayListData;
+	Button addToCart;
 	ImageView imageView;
-	MainPagerAdapter _adapter;
+	ProgressDialog pDialog;
+
+	List<ProductsModal> listProductsModal;
+
+	WebView webView;
 	Spinner spinner, SpinnerColor;
 	ArrayAdapter<String> arrayAdapter, arrAdapterColor;
-	List<String> arraySizes, arrayColor;
 	MyConnection con;
-	Button addToCart;
-	int count;
+
+	Element tagTitle, tagAbout, tagQuote, tagDetail, tagDetails;
+
+	String title, price, htmlContent, image;
+	List<String> arraySizes, arrayColor, arrayListImages;
+	ArrayList<String> arrayListData;
+
+	String valueSizeFromSpinner, valueColorFromSpinner;
+	int quantity;
+	ViewPager _mViewPager;
+	ScreenSlidePagerAdapter mPagerAdapter;
+
+	static int cartSize;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,9 +88,6 @@ public class ProductActivity2 extends Activity {
 		setContentView(R.layout.activity_product);
 		con = new MyConnection(this);
 		_mViewPager = (ViewPager) findViewById(R.id.viewPager);
-		_adapter = new MainPagerAdapter();
-		infl = (LayoutInflater) getApplicationContext().getSystemService(
-				Context.LAYOUT_INFLATER_SERVICE);
 
 		productKey = getIntent().getStringExtra("product_id");
 		imageStr = getIntent().getStringExtra("product_image");
@@ -110,6 +114,32 @@ public class ProductActivity2 extends Activity {
 		getProductDetailtask();
 
 		// updateUI(JSONstr);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		Cursor curser = con.selectData();
+		cartSize = curser.getCount();
+
+		if (cartSize > 0) {
+			txtNotification.setVisibility(View.VISIBLE);
+			txtNotification.setText(String.valueOf(cartSize));
+		} else {
+			txtNotification.setVisibility(View.GONE);
+		}
+
+	}
+
+	private DisplayImageOptions setupImageLoader() {
+		return new DisplayImageOptions.Builder().cacheInMemory(true)
+				.showImageOnLoading(R.drawable.ic_launcher)
+				.showImageForEmptyUri(R.drawable.no_image_icon)
+				.showImageOnFail(R.drawable.no_image_icon).cacheOnDisk(true)
+				.considerExifParams(true)
+				.displayer(new RoundedBitmapDisplayer(1)).build();
+
 	}
 
 	private void setupButtonListener() {
@@ -157,25 +187,47 @@ public class ProductActivity2 extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				boolean flag = con.insertData(mStrtitle, variantoption1, 0,
-						imageStr, variant, null, productKey);
+				if (validate()) {
+					boolean flag = con.insertData(title, valueSizeFromSpinner,
+							quantity, image, price, null, productKey);
 
-				if (flag) {
-					addone();
-					Toast.makeText(getApplicationContext(), "Added to Cart", 0)
-							.show();
-					Intent iAddToCart = new Intent(ProductActivity2.this,
-							AddToCartActivity.class);
-					startActivity(iAddToCart);
-				} else {
-					// Toast.makeText(getApplicationContext(), "Data Not save",
-					// 1)
-					// .show();
+					if (flag) {
+						addone();
+						Toast.makeText(getApplicationContext(),
+								"Added to Cart", 0).show();
+						Intent iAddToCart = new Intent(ProductActivity2.this,
+								AddToCartActivity.class);
+						startActivity(iAddToCart);
+					} else {
+						// Toast.makeText(getApplicationContext(),
+						// "Data Not save",
+						// 1)
+						// .show();
+					}
 				}
 
 			}
 		});
 
+	}
+
+	protected boolean validate() {
+		String quantityString = edtQty.getText().toString();
+		if (quantityString.trim().equals("")) {
+			LogMessage.showDialog(ProductActivity2.this, "Quantity",
+					"Plase enter qunatity", "OK");
+			return false;
+		} else {
+			quantity = Integer.parseInt(quantityString);
+		}
+		if (valueSizeFromSpinner.toLowerCase(Locale.getDefault()).equals(
+				"select size")) {
+			LogMessage.showDialog(ProductActivity2.this, "Size",
+					"Plase select size", "OK");
+			return false;
+		}
+
+		return true;
 	}
 
 	private void getProductDetailtask() {
@@ -186,153 +238,8 @@ public class ProductActivity2 extends Activity {
 
 	public void addone() {
 		txtNotification.setVisibility(View.VISIBLE);
-		count++;
-		txtNotification.setText(String.valueOf(count));
-	}
-
-	private void updateUI(String JSONstr) {
-		// TODO Auto-generated method stub
-
-		try {
-			JSONObject mJsonObject = new JSONObject(JSONstr);
-			mJsonArray = mJsonObject.getJSONArray("products");
-			Log.e("JSONstr------------------", "" + JSONstr);
-
-			for (int i = 0; i < mJsonArray.length(); i++) {
-				JSONObject jsonObject = mJsonArray.getJSONObject(i);
-				String id = jsonObject.getString("id");
-				String body_html = jsonObject.getString("body_html")
-						.replaceAll("[^\\x00-\\x7F]", "");
-
-				if (productKey.matches(id)) {
-					if (jsonObject.has("images")) {
-						mJsonArrayImages = jsonObject.getJSONArray("images");
-						for (int z = 0; z < mJsonArrayImages.length(); z++) {
-							JSONObject JsonObject = mJsonArrayImages
-									.getJSONObject(z);
-							mString_imagespath = JsonObject.getString("src");
-							arrayListImages.add(mString_imagespath);
-						}
-					}
-					mStrtitle = jsonObject.getString("title");
-					mJson_Array = jsonObject.getJSONArray("variants");
-					for (int j = 0; j < mJson_Array.length(); j++) {
-						JSONObject json_Object = mJson_Array.getJSONObject(j);
-						variant = json_Object.getString("price");
-
-						variantoption1 = json_Object.getString("option1");
-						if (variantoption1.contains("null")) {
-							spinner.setVisibility(View.GONE);
-						} else {
-							spinner.setVisibility(View.VISIBLE);
-							arraySizes.add(variantoption1);
-						}
-						variantoption2 = json_Object.getString("option2");
-						if (variantoption2.contains("null")) {
-							SpinnerColor.setVisibility(View.GONE);
-						} else {
-							SpinnerColor.setVisibility(View.VISIBLE);
-							arrayColor.add(variantoption2);
-						}
-
-						// Log.e("variantoption1---", "" + variantoption1);
-						// Log.e("variantoption2---", "" + variantoption2);
-					}
-					// mJsonArrayImage = jsonObject.getJSONArray("image");
-					// for (int k = 0; k < mJsonArrayImage.length(); k++) {
-					// JSONObject json_Object = mJson_Array.getJSONObject(k);
-					// imageStr = json_Object.getString("src");
-					// Log.e("imageStr__", ""+imageStr);
-					//
-					// }
-
-					webView.loadDataWithBaseURL(AppConstant.STORE, body_html,
-							"text/html", "UTF-8", null);
-					break;
-
-				}
-
-			}
-
-		} catch (Exception e) {
-			// // TODO: handle exception
-		}
-		// Log.e("arrayListImages: ", "" + arrayListImages.size());
-		// Log.e("arrayListImages full: ", "" + arrayListImages);
-
-		txt_product_title.setText(mStrtitle);
-
-		txtPrice.setText("$" + " " + variant);
-		// String str = variant.toString().trim();
-		// int n=Integer.parseInt(str);
-		// int n1 =n+n;
-		// Log.e("total price", "" +n1 );
-
-		// arraySizes.add(variantoption1);
-
-		arrayAdapter = new ArrayAdapter<String>(getApplicationContext(),
-				R.layout.custom_spinner_item, arraySizes);
-		arrayAdapter.setDropDownViewResource(R.layout.custom_spinner_item);
-
-		spinner.setAdapter(arrayAdapter);
-		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view,
-					int position, long id) {
-				// TODO Auto-generated method stub
-				String selected = parent.getItemAtPosition(0).toString();
-				if (selected == null) {
-					// Toast.makeText(getApplicationContext(), "NOT SELECTED",
-					// 0)
-					// .show();
-					// } else {
-					// Toast.makeText(getApplicationContext(), "SELECTED", 0)
-					// .show();
-				}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> parent) {
-				// TODO Auto-generated method stub
-				LogMessage.showDialog(ProductActivity2.this, null,
-						"Please Select a size", "OK");
-			}
-		});
-
-		arrAdapterColor = new ArrayAdapter<String>(getApplicationContext(),
-				R.layout.custom_spinner_item, arrayColor);
-		arrAdapterColor.setDropDownViewResource(R.layout.custom_spinner_item);
-		SpinnerColor.setAdapter(arrAdapterColor);
-
-		Log.e("spinner---", "" + spinner);
-
-		if (arrayListImages.size() != 0) {
-
-			for (int s = 0; s < arrayListImages.size(); s++) {
-				LinearLayout v1 = (LinearLayout) infl.inflate(
-						R.layout.custom_image, null);
-				imageView = (ImageView) v1.findViewById(R.id.img1);
-				Picasso.with(getApplicationContext())
-						.load(arrayListImages.get(s)).into(imageView);
-
-				// imageView.setImageResource(arrayListImages.get(s));
-
-				addView(v1);
-
-			}
-			_mViewPager.setAdapter(_adapter);
-
-		} else {
-
-		}
-
-	}
-
-	public void addView(View newPage) {
-		int pageIndex = _adapter.addView(newPage);
-
-		_mViewPager.setCurrentItem(pageIndex, true);
+		cartSize = cartSize + 1;
+		txtNotification.setText(String.valueOf(cartSize));
 	}
 
 	class ExecuteProductDetailTask extends AsyncTask<String, Integer, String> {
@@ -340,9 +247,9 @@ public class ProductActivity2 extends Activity {
 		@Override
 		protected String doInBackground(String... params) {
 
-			// String url = AppConstant.PRODUCT_DETAIL + params[0] + ".json";
-			// String response = WSAdapter.getJSONObject(url);
-			String response = WSAdapter.getJSONObject(AppConstant.STORE);
+			String url = AppConstant.PRODUCT_DETAIL + params[0] + ".json";
+			String response = WSAdapter.getJSONObject(url);
+			// String response = WSAdapter.getJSONObject(AppConstant.STORE);
 			return response;
 		}
 
@@ -360,11 +267,140 @@ public class ProductActivity2 extends Activity {
 
 			pDialog.dismiss();
 			if (result != null) {
-				updateUI(result);
+
+				parseResponse(result);
+				// updateUI(result);
 			}
 
 		}
 
 	}
 
+	public void parseResponse(String result) {
+
+		try {
+			JSONObject jsonMainObject = new JSONObject(result);
+			JSONObject jsonProduct = jsonMainObject.getJSONObject("product");
+			String id = jsonProduct.getString("id");
+			title = jsonProduct.getString("title");
+			htmlContent = jsonProduct.getString("body_html").replaceAll(
+					"[^\\x00-\\x7F]", "");
+
+			JSONArray jsonVarianArrary = jsonProduct.getJSONArray("variants");
+			JSONArray jsonImagesArrary = jsonProduct.getJSONArray("images");
+
+			arraySizes = JsonParser.getVariantSize(jsonVarianArrary);
+			arrayColor = JsonParser.getVariantColor(jsonVarianArrary);
+			price = JsonParser.getPrice(jsonVarianArrary);
+			arrayListImages = JsonParser.getGalleryImages(jsonImagesArrary);
+
+			if (jsonProduct.has("image")) {
+				JSONObject jImageObject = jsonProduct.getJSONObject("image");
+				image = jImageObject.getString("src");
+			} else {
+				image = "";
+			}
+
+			setupSpinner();
+			setupViewPager();
+			setUpOtherUi();
+
+		} catch (Exception e) {
+			Log.e("Exception", "" + e.getCause());
+		}
+
+	}
+
+	private void setUpOtherUi() {
+		txt_product_title.setText(title);
+
+		txtPrice.setText("$" + " " + price);
+		webView.loadDataWithBaseURL(AppConstant.STORE, htmlContent,
+				"text/html", "UTF-8", null);
+
+	}
+
+	private void setupViewPager() {
+
+		mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+		_mViewPager.setAdapter(mPagerAdapter);
+
+	}
+
+	private void setupSpinner() {
+
+		if (arraySizes != null && arraySizes.size() != 0) {
+			arrayAdapter = new ArrayAdapter<String>(getApplicationContext(),
+					R.layout.custom_spinner_item, arraySizes);
+			arrayAdapter.setDropDownViewResource(R.layout.custom_spinner_item);
+
+			spinner.setAdapter(arrayAdapter);
+			spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View view,
+						int position, long id) {
+					String selected = parent.getItemAtPosition(position)
+							.toString();
+					valueSizeFromSpinner = selected;
+				}
+
+				@Override
+				public void onNothingSelected(AdapterView<?> parent) {
+
+				}
+			});
+		} else {
+			spinner.setVisibility(View.GONE);
+		}
+
+		if (arrayColor != null && arrayColor.size() != 1) {
+			arrAdapterColor = new ArrayAdapter<String>(getApplicationContext(),
+					R.layout.custom_spinner_item, arrayColor);
+			arrAdapterColor
+					.setDropDownViewResource(R.layout.custom_spinner_item);
+			SpinnerColor.setAdapter(arrAdapterColor);
+			SpinnerColor
+					.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+						@Override
+						public void onItemSelected(AdapterView<?> parent,
+								View view, int position, long id) {
+							String selected = parent
+									.getItemAtPosition(position).toString();
+							valueColorFromSpinner = selected;
+						}
+
+						@Override
+						public void onNothingSelected(AdapterView<?> parent) {
+
+						}
+					});
+		} else {
+			SpinnerColor.setVisibility(View.GONE);
+		}
+
+	}
+
+	private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+		DisplayImageOptions options;
+
+		public ScreenSlidePagerAdapter(FragmentManager fm) {
+			super(fm);
+			options = setupImageLoader();
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+
+			return ImageHolderSlideFragment.create(position,
+					arrayListImages.get(position), options);
+		}
+
+		@Override
+		public int getCount() {
+			return arrayListImages.size();
+		}
+
+	}
 }

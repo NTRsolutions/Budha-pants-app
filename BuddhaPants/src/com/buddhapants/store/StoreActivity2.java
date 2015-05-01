@@ -63,8 +63,6 @@ public class StoreActivity2 extends Activity {
 
 		setupButtonListener();
 
-		setupImageLoader();
-
 		new ExecuteStore().execute();
 
 	}

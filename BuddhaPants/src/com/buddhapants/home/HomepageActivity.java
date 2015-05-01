@@ -99,8 +99,6 @@ public class HomepageActivity extends Activity {
 			}
 		});
 
-		// txtTitle.setText(Html
-		// .fromHtml("<h1 style=\"text-align: center;\"><span style=\"color: #444444;\">Pants that make you dance!</span></h1>"));
 		setupButtonListener();
 		initGridFeatureProduct();
 
@@ -230,7 +228,7 @@ public class HomepageActivity extends Activity {
 				for (int i = 0; i < mJsonArray.length(); i++) {
 					JSONObject jsonObject = mJsonArray.getJSONObject(i);
 
-					storeModal = new ImageModal();
+					ImageModal storeModal = new ImageModal();
 
 					String title = jsonObject.getString("title").replaceAll(
 							"[^\\x00-\\x7F]", "");
@@ -250,7 +248,9 @@ public class HomepageActivity extends Activity {
 					storeModal.setID(id);
 
 					listStoreModal.add(storeModal);
-
+					if (listStoreModal.size() == 5) {
+						break;
+					}
 				}
 			} catch (Exception e) {
 				// TODO: handle exception

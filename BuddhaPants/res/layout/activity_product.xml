@@ -180,6 +180,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/edittext_selector_cyan"
                 android:hint="Qty"
+                android:inputType="number"
                 android:paddingLeft="5dp"
                 android:textColor="@color/color_cyan"
                 android:textColorHint="@color/color_cyan" />

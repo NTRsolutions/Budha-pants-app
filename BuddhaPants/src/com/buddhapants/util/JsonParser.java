@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
@@ -57,4 +58,62 @@ public class JsonParser {
 
 	}
 
+	public static List<String> getVariantSize(JSONArray jsonVarianArrary)
+			throws JSONException {
+
+		List<String> resultList = new ArrayList<String>();
+		resultList.add("Select size");
+		for (int i = 0; i < jsonVarianArrary.length(); i++) {
+
+			JSONObject innerObject = jsonVarianArrary.getJSONObject(i);
+			resultList.add(innerObject.getString("option1"));
+		}
+
+		return resultList;
+	}
+
+	public static List<String> getVariantColor(JSONArray jsonVarianArrary)
+			throws JSONException {
+
+		List<String> resultList = new ArrayList<String>();
+		resultList.add("Select color");
+		for (int i = 0; i < jsonVarianArrary.length(); i++) {
+
+			JSONObject innerObject = jsonVarianArrary.getJSONObject(i);
+			if (!innerObject.getString("option2").equals("null"))
+				resultList.add(innerObject.getString("option2"));
+
+		}
+
+		return resultList;
+	}
+
+	public static List<String> getGalleryImages(JSONArray jsonVarianArrary)
+			throws JSONException {
+
+		List<String> resultList = new ArrayList<String>();
+		for (int i = 0; i < jsonVarianArrary.length(); i++) {
+
+			JSONObject innerObject = jsonVarianArrary.getJSONObject(i);
+			resultList.add(innerObject.getString("src"));
+		}
+
+		return resultList;
+	}
+
+	public static String getPrice(JSONArray jsonVarianArrary)
+			throws JSONException {
+
+		String price = null;
+		JSONObject innerObject = null;
+		if (jsonVarianArrary.length() != 0) {
+			innerObject = jsonVarianArrary.getJSONObject(0);
+			price = innerObject.getString("price");
+		} else {
+			price = "0";
+		}
+
+		return price;
+
+	}
 }
