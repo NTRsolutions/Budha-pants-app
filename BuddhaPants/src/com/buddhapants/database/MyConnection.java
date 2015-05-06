@@ -13,7 +13,7 @@ public class MyConnection {
 	public SQLiteDatabase sqdb;
 	String allcolumn[] = { MyDatabase.TCTITLE, MyDatabase.TCSIZE,
 			MyDatabase.TCPRICE, MyDatabase.TTOTAL, MyDatabase.TCQTY,
-			MyDatabase.TCIMAGE, MyDatabase.TKEY };
+			MyDatabase.TCIMAGE, MyDatabase.TKEY, MyDatabase.TCOLOR };
 	String allcolumnRegister[] = { MyDatabase.TCFNAME, MyDatabase.TCLASTNAME,
 			MyDatabase.TCEMAIL, MyDatabase.TCID };
 
@@ -29,13 +29,14 @@ public class MyConnection {
 
 	}
 
-	public boolean insertData(String title, String size, int qty, String image,
-			String price, String total, String id) {
+	public boolean insertData(String title, String size, String color, int qty,
+			String image, String price, String total, String id) {
 		boolean flag = false;
 		ContentValues cv = new ContentValues();
 		try {
 			cv.put(MyDatabase.TCTITLE, title);
 			cv.put(MyDatabase.TCSIZE, size);
+			cv.put(MyDatabase.TCOLOR, color);
 			cv.put(MyDatabase.TCPRICE, price);
 			cv.put(MyDatabase.TTOTAL, total);
 			cv.put(MyDatabase.TCQTY, qty);
@@ -138,9 +139,10 @@ public class MyConnection {
 	}
 
 	public void Delete_Row(String string) {
-		Log.e("string: ", "" + string);
 
-		sqdb.delete(MyDatabase.TABLENAME, MyDatabase.TKEY + "=" + string, null);
+		sqdb.delete(MyDatabase.TABLENAME, MyDatabase.TKEY + "= ?",
+				new String[] { string });
+		Log.e("Deleted Id: ", "" + string);
 
 	}
 

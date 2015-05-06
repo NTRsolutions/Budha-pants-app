@@ -193,8 +193,9 @@ public class ProductActivity2 extends FragmentActivity {
 					double subtotal_price = quantity * priceValue;
 
 					boolean flag = con.insertData(title, valueSizeFromSpinner,
-							quantity, image, df.format(priceValue),
-							df.format(subtotal_price), productKey);
+							valueColorFromSpinner, quantity, image,
+							df.format(priceValue), df.format(subtotal_price),
+							productKey);
 
 					if (flag) {
 						addone();
@@ -223,6 +224,17 @@ public class ProductActivity2 extends FragmentActivity {
 			Toast.makeText(ProductActivity2.this, "Please select size ",
 					Toast.LENGTH_SHORT).show();
 			return false;
+		}
+
+		if (arrayColor != null && arrayColor.size() > 1) {
+			if (valueColorFromSpinner.toLowerCase(Locale.getDefault()).equals(
+					"select color")) {
+				Toast.makeText(ProductActivity2.this, "Please color size ",
+						Toast.LENGTH_SHORT).show();
+				return false;
+			}
+		} else {
+			valueColorFromSpinner="";
 		}
 		if (quantityString.trim().equals("")) {
 			Toast.makeText(ProductActivity2.this, "Please enter quantity ",

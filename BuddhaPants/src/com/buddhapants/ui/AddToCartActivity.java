@@ -1,5 +1,6 @@
 package com.buddhapants.ui;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -38,6 +39,7 @@ public class AddToCartActivity extends Activity {
 	ArrayList<String> arrayList_qty;
 	ArrayList<String> arrayList_image;
 	ArrayList<String> arrayList_id;
+	ArrayList<String> arrayList_Color;
 	private ArrayList<String> arrayList_total_price;
 	ImageView imgProduct;
 	TextView txtTitle, txtSize, txtPrice, txtNoData;
@@ -68,6 +70,7 @@ public class AddToCartActivity extends Activity {
 		arrayList_qty = new ArrayList<String>();
 		arrayList_image = new ArrayList<String>();
 		arrayList_id = new ArrayList<String>();
+		arrayList_Color = new ArrayList<String>();
 
 		initCartItem();
 
@@ -80,13 +83,12 @@ public class AddToCartActivity extends Activity {
 	private void initCartItem() {
 		try {
 			mCursor = connection.selectData();
-
-			// mCursor.moveToFirst();
+			cartSize = mCursor.getCount();
+			Log.e("Cart Sizeeeeeeeeeeeeeeeeee>>>>>>>>>>>>>>>>>>>>", cartSize
+					+ "");
 			if (mCursor.getCount() != 0) {
-
 				arrayList_title.clear();
 				do {
-
 					arrayList_title.add(mCursor.getString(0).trim());
 					arrayList_size.add(mCursor.getString(1).trim());
 					arrayList_price.add(mCursor.getString(2).trim());
@@ -94,6 +96,7 @@ public class AddToCartActivity extends Activity {
 					arrayList_qty.add(mCursor.getString(4).trim());
 					arrayList_image.add(mCursor.getString(5).trim());
 					arrayList_id.add(mCursor.getString(6).trim());
+					arrayList_Color.add(mCursor.getString(7).trim());
 
 				} while (mCursor.moveToNext());
 
@@ -102,7 +105,8 @@ public class AddToCartActivity extends Activity {
 
 				adapterlist = new ListAdapter(arrayList_title, arrayList_size,
 						arrayList_price, arrayList_total_price, arrayList_qty,
-						arrayList_image, arrayList_id, arrayList);
+						arrayList_image, arrayList_id, arrayList,
+						arrayList_Color);
 				listView.setAdapter(adapterlist);
 
 			}
@@ -145,8 +149,8 @@ public class AddToCartActivity extends Activity {
 			subtotal = subtotal
 					+ Double.parseDouble(arrayList_total_price.get(i));
 		}
-		cartSize = arrayList_price.size();
-		subtotalText.setText("$" + subtotal);
+		DecimalFormat df = new DecimalFormat("#.00");
+		subtotalText.setText("$" + df.format(subtotal));
 
 	}
 
@@ -160,6 +164,7 @@ public class AddToCartActivity extends Activity {
 		ArrayList<String> arrayList_qty;
 		ArrayList<String> arrayList_image;
 		ArrayList<String> arrayList_id;
+		ArrayList<String> arrayList_Color;
 
 		public ListAdapter(ArrayList<String> arrayList_title,
 				ArrayList<String> arrayList_size,
@@ -167,7 +172,8 @@ public class AddToCartActivity extends Activity {
 				ArrayList<String> arrayList_total_price,
 				ArrayList<String> arrayList_qty,
 				ArrayList<String> arrayList_image,
-				ArrayList<String> arrayList_id, ArrayList<String> arrayList) {
+				ArrayList<String> arrayList_id, ArrayList<String> arrayList,
+				ArrayList<String> arrayList_Color) {
 			super();
 			this.arrayList_title = arrayList_title;
 			this.arrayList_size = arrayList_size;
@@ -176,12 +182,13 @@ public class AddToCartActivity extends Activity {
 			this.arrayList_qty = arrayList_qty;
 			this.arrayList_image = arrayList_image;
 			this.arrayList_id = arrayList_id;
+			this.arrayList_Color = arrayList_Color;
 		}
 
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
-			return arrayList_title.size();
+			return cartSize;
 		}
 
 		@Override
@@ -204,7 +211,6 @@ public class AddToCartActivity extends Activity {
 
 			if (inflater == null) {
 				inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
 			}
 			if (convertView == null) {
 				convertView = inflater.inflate(R.layout.cart_items, null);
@@ -233,10 +239,18 @@ public class AddToCartActivity extends Activity {
 			holder.txtPrice.setText("$" + arrayList_total_price.get(position));
 			// holder.txtTotalPrice.setText("Total Price : "
 			// + arrayList_total_price.get(position));
-			holder.txtSize.setText("(" + arrayList_size.get(position) + ")");
+			if (!arrayList_Color.get(position).equals("")) {
+				holder.txtSize.setText("(" + arrayList_size.get(position)
+						+ ")/" + arrayList_Color.get(position));
+
+			} else {
+				holder.txtSize
+						.setText("(" + arrayList_size.get(position) + ")");
+
+			}
 			holder.txtQuant.setText("Qty : " + arrayList_qty.get(position));
 			Picasso.with(getApplicationContext())
-					.load(arrayList_image.get(position))
+					.load(arrayList_image.get(position)).resize(250, 250)
 					.into(holder.imgProduct);
 			// edtQuantity.setText(arrayList_qty.get(position));
 
@@ -245,7 +259,6 @@ public class AddToCartActivity extends Activity {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					Log.e("arrayList_id: ", "" + arrayList_id.get(position));
 					connection.Delete_Row(" " + arrayList_id.get(position));
 
 					arrayList_title.remove(arrayList_title.get(position));
@@ -259,12 +272,14 @@ public class AddToCartActivity extends Activity {
 		}
 
 		protected void removeFromSubTotal(String amtD) {
+			DecimalFormat df = new DecimalFormat("#.00");
 			subtotal = subtotal - Double.parseDouble(amtD);
+
 			cartSize = cartSize - 1;
 			if (subtotal <= 0.0) {
 				subtotalText.setText("$" + 0.0);
 			} else {
-				subtotalText.setText("$" + subtotal);
+				subtotalText.setText("$" + df.format(subtotal));
 
 			}
 

@@ -18,8 +18,7 @@
             android:layout_width="95dp"
             android:layout_height="95dp"
             android:layout_gravity="center"
-            android:scaleType="fitXY"
-            android:src="@drawable/img_sample_product" />
+            android:scaleType="fitXY" />
     </FrameLayout>
 
     <TextView
